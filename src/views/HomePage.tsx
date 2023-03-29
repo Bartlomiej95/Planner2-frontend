@@ -1,8 +1,9 @@
+import Header from "../organisms/Header/Header"
 
 export const HomePage = () => {
     return(
-        <div>
-            <h1>HomePage</h1>
-        </div>
+        <>
+            <Header/>
+        </>
     )
 }
