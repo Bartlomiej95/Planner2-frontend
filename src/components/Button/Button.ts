@@ -2,10 +2,11 @@ import styled from 'styled-components';
 
 
 export const PrimaryBtn = styled.button`
+    display: block;
     width: ${({ theme }) => theme.PrimaryBtn.mobileWidth};
     height: ${({ theme }) => theme.PrimaryBtn.mobileHeight};
     background-color: ${({ theme }) => theme.PrimaryBtn.buttonsPrimaryBcgColor};
-    border-radius: ${({ theme }) => theme.PrimaryBtn.buttonsBorderRadius};
+    border-radius: ${({ theme }) => theme.buttonsBorderRadius};
     color: ${({ theme }) => theme.PrimaryBtn.buttonsPrimaryColor};
     cursor: pointer;
     outline: none;
@@ -15,10 +16,11 @@ export const PrimaryBtn = styled.button`
 `;
 
 export const SecondaryBtn = styled.button`
+    display: block;
     width: ${({ theme }) => theme.SecondaryBtn.mobileWidth};
     height: ${({ theme }) => theme.SecondaryBtn.mobileHeight};
     background-color: ${({ theme }) => theme.SecondaryBtn.buttonsSecondaryBcgColor};
-    border-radius: ${({ theme }) => theme.SecondaryBtn.buttonsBorderRadius};
+    border-radius: ${({ theme }) => theme.buttonsBorderRadius};
     color: ${({ theme }) => theme.SecondaryBtn.buttonsSecondaryColor};
     cursor: pointer;
     outline: none;
