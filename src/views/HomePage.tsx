@@ -1,6 +1,7 @@
-import Banner from "../organisms/Banner/Banner"
-import Header from "../organisms/Header/Header"
-import PlannerFunc from "../organisms/PlannerFunc/PlannerFunc"
+import Banner from "../organisms/Banner/Banner";
+import Header from "../organisms/Header/Header";
+import PlannerFunc from "../organisms/PlannerFunc/PlannerFunc";
+import FAQSection from "../organisms/FAQSection/FAQSection";
 
 export const HomePage = () => {
     return(
@@ -8,6 +9,7 @@ export const HomePage = () => {
             <Header/>
             <Banner/>
             <PlannerFunc />
+            <FAQSection />
         </>
     )
 }
