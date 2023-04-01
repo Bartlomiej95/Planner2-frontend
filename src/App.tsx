@@ -4,6 +4,7 @@ import GlobalStyle from "./theme/GlobalStyle";
 import { theme } from "./theme/mainTheme";
 import { HomePage } from "./views/HomePage";
 import { LoginPage } from "./views/LoginPage";
+import { RegisterPage } from "./views/RegisterPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage/>}/>
             <Route path="/login" element={<LoginPage/>}/>
+            <Route path="/register" element={<RegisterPage/>}/>
           </Routes>
         </Router>
 
