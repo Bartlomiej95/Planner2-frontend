@@ -8,6 +8,7 @@ export const PrimaryBtn = styled.button`
     background-color: ${({ theme }) => theme.PrimaryBtn.buttonsPrimaryBcgColor};
     border-radius: ${({ theme }) => theme.buttonsBorderRadius};
     color: ${({ theme }) => theme.PrimaryBtn.buttonsPrimaryColor};
+    margin: 0 auto;
     cursor: pointer;
     outline: none;
     :hover {
@@ -22,6 +23,7 @@ export const SecondaryBtn = styled.button`
     background-color: ${({ theme }) => theme.SecondaryBtn.buttonsSecondaryBcgColor};
     border-radius: ${({ theme }) => theme.buttonsBorderRadius};
     color: ${({ theme }) => theme.SecondaryBtn.buttonsSecondaryColor};
+    margin: 0 auto;
     cursor: pointer;
     outline: none;
     :hover {

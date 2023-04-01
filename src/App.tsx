@@ -3,6 +3,7 @@ import { ThemeProvider } from "styled-components";
 import GlobalStyle from "./theme/GlobalStyle";
 import { theme } from "./theme/mainTheme";
 import { HomePage } from "./views/HomePage";
+import { LoginPage } from "./views/LoginPage";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
+            <Route path="/login" element={<LoginPage/>}/>
           </Routes>
         </Router>
 

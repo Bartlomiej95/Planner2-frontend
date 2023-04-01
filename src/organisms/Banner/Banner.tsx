@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 import { PrimaryBtn } from '../../components/Button/Button';
 import { Heading, SubHeading } from '../../components/Heading/Heading';
 import { BannerCardAboutPlanner } from '../../molecules/Card/Card';
@@ -34,10 +35,12 @@ const SingleNav = styled.div`
 `;
 
 const Banner = () => {
+
+    const nav = useNavigate();
     return(
         <Wrapper>
             <Heading> Zaloguj się lub utwórz konto </Heading>
-            <BannerLoginButton>Zaloguj się </BannerLoginButton>
+            <BannerLoginButton onClick={() => nav('/login')}>Zaloguj się </BannerLoginButton>
             <SubHeading>Poznaj nasze rozwiązanie</SubHeading>
             <BannerCardAboutPlanner />
             <CardNavigation >
