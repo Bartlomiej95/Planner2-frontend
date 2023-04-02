@@ -8,4 +8,9 @@ export const Input = styled.input`
     border-radius: ${({ theme }) => theme.Input.borderRadius};
     padding: ${({ theme }) => theme.Input.mobilePadding};
     margin: 10px auto;
+
+    ::placeholder{
+        padding-left: 25px;
+        color: rgb(55, 47, 255, 0.5);
+    }
 `;
