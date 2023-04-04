@@ -4,6 +4,7 @@ import { SubHeading } from '../../components/Heading/Heading';
 import { useState } from 'react';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { TaskSection } from '../TasksSection/TasksSection';
+import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
 
 const Wrapper = styled.main`
     min-height: 100vh;
@@ -63,9 +64,10 @@ export const MainSection = () => {
     return(
         <Wrapper>
             <WrapperNavbar>
-                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Project)}>Projekty</NavSubHeading>
-                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Archives)}>Archiwum projektów</NavSubHeading>
-                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Tasks)}>Lista zadań</NavSubHeading>
+                <InnerNavbar 
+                    typeFn={ (typeOfMainSection: React.SetStateAction<MainSectionType>) => setTypeOfMainSection(typeOfMainSection)}
+                    valueOfType={typeOfMainSection} 
+                />
             </WrapperNavbar>
             {
                 typeOfMainSection === MainSectionType.Project && ( 
