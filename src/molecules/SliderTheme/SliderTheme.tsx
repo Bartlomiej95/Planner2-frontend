@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import sunIcon from '../../assets/sunIcon.svg';
 
 const Wrapper = styled.div`
@@ -27,11 +27,47 @@ const SliderIcon = styled.img`
     height: 12px;
 `;
 
+const WrapperSliderTask = styled(Wrapper)<{ readonly active: boolean;}>`
+    background-color: rgb(112,112,112, 0.4);
+    margin-bottom: 0px;
+    justify-content: end;
+    padding: 0 3px;
+    ${({ active }) => active &&
+        css`
+            background-color: green;
+        `}  
+`;
+
+const SliderTaskBar = styled(SliderBar)<{ readonly active: boolean}>`
+    background-color: #FFFFFF;
+    ${({ active }) => active &&
+        css`
+            transform: translateX(-15px);        
+        `}   
+`;
+
+interface SliderTaskInterface {
+    activeTask: boolean;
+    onClick: () => void;
+    activeHandle: () => void;
+}
+
+
 export const SliderTheme = () => {
     return(
         <Wrapper>
             <SliderIcon src={sunIcon} alt="ikonka"/>
             <SliderBar/>
         </Wrapper>
+    )
+}
+
+export const SliderTask: React.FC<SliderTaskInterface> = ({activeTask, activeHandle, ...props }) => {
+
+    // w zmiennej activeTask przekazujemy wartość boolean, która wskazuje czy dane zadanie jest akutalnie kliknięte przez użytkownika jako to, którym aktualnie użytkownik chce się zająć
+    return(
+        <WrapperSliderTask active={activeTask} onClick={() => activeHandle()}>
+            <SliderTaskBar active={activeTask}/>
+        </WrapperSliderTask>
     )
 }

@@ -1,6 +1,9 @@
 import styled from 'styled-components';
 import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
 import { SubHeading } from '../../components/Heading/Heading';
+import { useState } from 'react';
+import { Paragraph } from '../../components/Paragraph/Paragraph';
+import { TaskSection } from '../TasksSection/TasksSection';
 
 const Wrapper = styled.main`
     min-height: 100vh;
@@ -25,19 +28,76 @@ const WrapperProjectCard = styled.div`
     margin-top: 42px;
 `;
 
+const WrapperHelpdeskInfo = styled.div`
+    width: 50%;
+    height: 200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+`;
+
+const ParagraphHelpdesk = styled(Paragraph)`
+    margin-top: 14px;
+`;
+
+const SpanHelpdesk = styled.span`
+    font-weight: 700;
+    cursor: pointer;
+`;
+
+enum MainSectionType {
+    Project = 'project',
+    Archives = 'archives',
+    ProjectManager = "projectManager",
+    Tasks = 'tasks',
+    Data = 'data',
+}
+
 export const MainSection = () => {
+
+    const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project)
+
     return(
         <Wrapper>
             <WrapperNavbar>
-                <NavSubHeading>Projekty</NavSubHeading>
-                <NavSubHeading>Archiwum projektów</NavSubHeading>
-                <NavSubHeading>Lista zadań</NavSubHeading>
+                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Project)}>Projekty</NavSubHeading>
+                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Archives)}>Archiwum projektów</NavSubHeading>
+                <NavSubHeading onClick={() => setTypeOfMainSection(MainSectionType.Tasks)}>Lista zadań</NavSubHeading>
             </WrapperNavbar>
-            <WrapperProjectCard>
-                <ProjectCard />
-                <ProjectCard />
-                <ProjectCard />
-            </WrapperProjectCard>
+            {
+                typeOfMainSection === MainSectionType.Project && ( 
+                    <WrapperProjectCard>
+                        <ProjectCard />
+                        <ProjectCard />
+                        <ProjectCard />
+                    </WrapperProjectCard>
+                ) 
+            }
+            {
+                typeOfMainSection === MainSectionType.Archives && (
+                    <WrapperProjectCard>
+                        {/* <ArchivesCard />
+                        <ArchivesCard />
+                        <ArchivesCard /> */}
+                        <h2>Archiwum</h2>
+                    </WrapperProjectCard>
+                )
+            }
+            {
+                typeOfMainSection === MainSectionType.Tasks && (
+                    <WrapperProjectCard>
+                       <TaskSection />
+                       <h2>Zadania</h2>
+                    </WrapperProjectCard>
+                )
+            }
+            <WrapperHelpdeskInfo>
+                <SubHeading>Masz problem z obsługą planera?</SubHeading>
+                <ParagraphHelpdesk> <SpanHelpdesk>Zgłoś się</SpanHelpdesk> do naszego helpdesku</ParagraphHelpdesk>
+            </WrapperHelpdeskInfo>
         </Wrapper>
     )
 }
