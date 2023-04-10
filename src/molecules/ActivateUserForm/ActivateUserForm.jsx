@@ -1,8 +1,12 @@
 import styled from "styled-components";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Heading, SubHeading } from "../../components/Heading/Heading";
 import { Input } from "../../components/Input/Input";
 import { PrimaryBtn } from "../../components/Button/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchAllCompanies, getAllCompanies } from "../../store/Companies/companiesSlice";
+import { AppDispatch } from "../..";
+import { CompaniesType, ICompanies } from "../../types/Companies";
 
 const ActivateForm = styled.form`
     margin: 30px auto 10px auto;
@@ -40,17 +44,26 @@ export const ActivateUserForm = () => {
         nip: '',
         ifUserHasCompany: '',
         password: '',
-    })
+    });
+    const dispatch = useDispatch();
+    const companies = useSelector(getAllCompanies);
+    console.log(companies);
+
+    useEffect(() => {
+        dispatch(fetchAllCompanies());
+        
+    }, [dispatch])
+
     
-    const handleSelectValue = (e: React.SyntheticEvent) => {
+    const handleSelectValue = (e) => {
         e.preventDefault();
-        const target = e.target as HTMLSelectElement;
+        const target = e.target;
         setSelectValue(target.value);
     }
 
-    const handleInpuValue = (e: React.SyntheticEvent) => {
+    const handleInpuValue = (e) => {
         e.preventDefault();
-        const target = e.target as HTMLInputElement;
+        const target = e.target;
         setActivateUserdata({
             ...activateUserdata,
             [target.name]: target.value,
@@ -78,8 +91,11 @@ export const ActivateUserForm = () => {
                     <Select onChange={ (e) => handleSelectValue(e)} value={selectValue}>
                         <option value="-">-</option>
                         <option value="new">Załóż nową</option>
-                        <option value="A">Firma A</option>
-                        <option value="B">Firma B</option>
+                        { companies.map(item => {
+                            return(
+                                <option value={item.name}>{item.name}</option>
+                            )
+                        })}
                     </Select>
                     {
                         selectValue === "new" && (
