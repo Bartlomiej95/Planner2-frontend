@@ -51,7 +51,6 @@ export const ActivateUserForm = () => {
 
     useEffect(() => {
         dispatch(fetchAllCompanies());
-        
     }, [dispatch])
 
     

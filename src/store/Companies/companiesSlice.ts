@@ -13,7 +13,7 @@ export const fetchAllCompanies = createAsyncThunk(
 );
 
 const initialState = {
-    companies: Array<ICompanies | []> 
+    companies: [], 
 };
 
 export const companiesSlice = createSlice({
