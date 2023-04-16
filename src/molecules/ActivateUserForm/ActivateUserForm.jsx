@@ -1,12 +1,12 @@
 import styled from "styled-components";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
 import { Heading, SubHeading } from "../../components/Heading/Heading";
 import { Input } from "../../components/Input/Input";
 import { PrimaryBtn } from "../../components/Button/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllCompanies, getAllCompanies } from "../../store/Companies/companiesSlice";
-import { AppDispatch } from "../..";
-import { CompaniesType, ICompanies } from "../../types/Companies";
+import { activateNewUser } from "../../store/Users/usersSlice";
+import { useParams } from "react-router-dom";
 
 const ActivateForm = styled.form`
     margin: 30px auto 10px auto;
@@ -38,20 +38,29 @@ export const ActivateUserForm = () => {
     const [selectValue, setSelectValue] = useState('');
     const [secondPartOfForm, setSecondPartOfForm] = useState(false);
     const [activateUserdata, setActivateUserdata] = useState({
-        firstName: '',
-        lastName: '',
-        company: '',
-        nip: '',
-        ifUserHasCompany: '',
-        password: '',
+        urlCode: "",
+        password: "",
+        firstName: "",
+        lastName: "",
+        ifUserHasCompany: false,
+        company: "",
+        nip: 0,
+        position: "",
     });
     const dispatch = useDispatch();
     const companies = useSelector(getAllCompanies);
-    console.log(companies);
+    const { link } = useParams();
 
     useEffect(() => {
         dispatch(fetchAllCompanies());
-    }, [dispatch])
+    }, [dispatch]);
+
+    useEffect(() => {
+        setActivateUserdata({
+            ...activateNewUser,
+            urlCode: link,
+        })
+    }, [])
 
     
     const handleSelectValue = (e) => {
@@ -66,7 +75,22 @@ export const ActivateUserForm = () => {
         setActivateUserdata({
             ...activateUserdata,
             [target.name]: target.value,
-        })
+        });
+        if(selectValue !== "new" && selectValue !== "-"){
+            setActivateUserdata({
+                ...activateNewUser,
+                ifUserHasCompany: true,
+            })
+        }
+    }
+
+    const handleBtnSetNewPass = (e) => {
+        e.preventDefault();
+        try {
+            dispatch(activateNewUser(activateUserdata));
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return(
@@ -77,7 +101,7 @@ export const ActivateUserForm = () => {
                     <Input type="password" name="password" placeholder="Password" value={activateUserdata.password} onChange={(e) => handleInpuValue(e)}/>
                     <BtnWrapper>
                         <PrimaryBtn onClick={ (e) => setSecondPartOfForm(false)}>Poprzednie</PrimaryBtn>
-                        <PrimaryBtn>Ustaw hasło</PrimaryBtn>
+                        <PrimaryBtn onClick={ (e) => handleBtnSetNewPass(e) }>Ustaw hasło</PrimaryBtn>
                     </BtnWrapper>                    
                 </>
             ) : (

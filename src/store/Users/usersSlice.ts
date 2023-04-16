@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../../api/index";
+import { ActivationUser } from "../../types/Users";
 
 export const createNewUser = createAsyncThunk(
     "users/createNewUser",
@@ -13,6 +14,20 @@ export const createNewUser = createAsyncThunk(
         }
     }
 );
+
+export const activateNewUser = createAsyncThunk(
+    "users/activateNewUser",
+    async (activateData: ActivationUser) => {
+        try {
+            const { data }  = await api.activateNewUser(activateData);
+            console.log(data);
+            return data;
+            
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
 
 
 const initialState = {
@@ -43,6 +58,19 @@ export const usersSlice = createSlice({
 
         builder.addCase(createNewUser.fulfilled, (state, action) => {
             state.message = action.payload.message;
+        });
+
+        builder.addCase(activateNewUser.pending, (state, action) => {
+            console.log("Pending");
+        });
+
+        builder.addCase(activateNewUser.rejected, (state, action) => {
+            console.log("Rejected");
+            state.error = action.payload as string;
+        });
+
+        builder.addCase(activateNewUser.fulfilled, (state, action) => {
+            state.user = action.payload as {};
         });
     }
 });
