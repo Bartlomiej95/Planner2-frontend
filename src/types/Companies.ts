@@ -11,3 +11,9 @@ export interface ICompanies {
     nip: number,
     administratorId: number,
 }
+
+export type NewCompanyType = {
+    name: string,
+    nip: number,
+    link: string,
+}

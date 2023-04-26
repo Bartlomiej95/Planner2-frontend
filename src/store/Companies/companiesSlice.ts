@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit';
 import * as api from "../../api/index";
 import { RootState } from '../..';
-import { ICompanies } from '../../types/Companies';
+import { ICompanies, NewCompanyType } from '../../types/Companies';
 
 export const fetchAllCompanies = createAsyncThunk(
     "companies/fetchAllCompanies",
@@ -12,8 +12,19 @@ export const fetchAllCompanies = createAsyncThunk(
     }
 );
 
+export const createNewCompany = createAsyncThunk(
+    "companies/createNewComapny",
+    async (data: NewCompanyType) => {
+        const response = await api.createNewCompany(data);
+        console.log(response.data);
+        return response.data;
+    }
+)
+
 const initialState = {
     companies: [], 
+    company: {},
+    error: "",
 };
 
 export const companiesSlice = createSlice({
@@ -37,6 +48,19 @@ export const companiesSlice = createSlice({
         builder.addCase(fetchAllCompanies.fulfilled, (state, action) => {
             console.log("Success");
             return { ...state, companies: action.payload}
+        });
+
+        builder.addCase(createNewCompany.pending, (state, action) => {
+            console.log("Pending");
+        });
+
+        builder.addCase(createNewCompany.rejected, (state, action) => {
+            console.log("Rejected");
+        });
+
+        builder.addCase(createNewCompany.fulfilled, (state, action) => {
+            console.log("Success");
+            state.company = action.payload;
         });
     }
 });
