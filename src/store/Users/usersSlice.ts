@@ -19,7 +19,7 @@ export const activateNewUser = createAsyncThunk(
     "users/activateNewUser",
     async (activateData: ActivationUser) => {
         try {
-            const { data }  = await api.activateNewUser(activateData);
+            const { data } = await api.activateNewUser(activateData);
             console.log(data);
             return data;
             

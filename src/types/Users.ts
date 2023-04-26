@@ -25,12 +25,8 @@ export enum Position {
 
 export type ActivationUser = {
     urlCode: string;
-    email: string;
     password: string;
     firstName: string;
     lastName: string;
-    ifUserHasCompany: boolean;
-    company: string;
-    nip: number | null;
     position: Position;
 }
