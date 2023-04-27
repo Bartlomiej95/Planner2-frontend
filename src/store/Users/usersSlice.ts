@@ -29,6 +29,19 @@ export const activateNewUser = createAsyncThunk(
     }
 )
 
+export const loginUser = createAsyncThunk(
+    "users/loginUser",
+    async (loginData: { email: string, password: string}) => {
+        try {
+            const { data } = await api.login(loginData);
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
 
 const initialState = {
     usersInCompany: [],
@@ -50,26 +63,35 @@ export const usersSlice = createSlice({
         builder.addCase(createNewUser.pending, (state, action) => {
             console.log("Pending");
         });
-
         builder.addCase(createNewUser.rejected, (state, action) => {
             console.log("Rejected");
             state.error = action.payload as string;
         });
-
         builder.addCase(createNewUser.fulfilled, (state, action) => {
             state.message = action.payload.message;
         });
 
+
         builder.addCase(activateNewUser.pending, (state, action) => {
             console.log("Pending");
         });
-
         builder.addCase(activateNewUser.rejected, (state, action) => {
             console.log("Rejected");
             state.error = action.payload as string;
         });
-
         builder.addCase(activateNewUser.fulfilled, (state, action) => {
+            state.user = action.payload as {};
+        });
+        
+
+        builder.addCase(loginUser.pending, (state, action) => {
+            console.log("Pending");
+        });
+        builder.addCase(loginUser.rejected, (state, action) => {
+            console.log("Rejected");
+            state.error = action.payload as string;
+        });
+        builder.addCase(loginUser.fulfilled, (state, action) => {
             state.user = action.payload as {};
         });
     }

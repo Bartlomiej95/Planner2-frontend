@@ -9,3 +9,4 @@ export const fetchAllCompanies = () => axios.get(`${domain}/company/all`);
 export const createNewUser = (email: string) => axios.post(`${domain}/register`, { email });
 export const activateNewUser = (data: ActivationUser) => axios.post(`${domain}/activate`, { data });
 export const createNewCompany = (data: NewCompanyType) => axios.post(`${domain}/company`, { ...data });
+export const login = (data: {email: string, password: string}) => axios.post(`${domain}/login`, { ...data });
