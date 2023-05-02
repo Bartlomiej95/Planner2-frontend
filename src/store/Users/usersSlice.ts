@@ -7,7 +7,6 @@ export const createNewUser = createAsyncThunk(
     async (email: string) => {
         try{
             const { data } = await api.createNewUser(email);
-            console.log("data", data);
             return data;
         }catch(err){
             console.error(err);
@@ -20,7 +19,6 @@ export const activateNewUser = createAsyncThunk(
     async (activateData: ActivationUser) => {
         try {
             const { data } = await api.activateNewUser(activateData);
-            console.log(data);
             return data;
             
         } catch (error) {
@@ -82,7 +80,7 @@ export const usersSlice = createSlice({
         builder.addCase(activateNewUser.fulfilled, (state, action) => {
             state.user = action.payload as {};
         });
-        
+
 
         builder.addCase(loginUser.pending, (state, action) => {
             console.log("Pending");
@@ -92,7 +90,12 @@ export const usersSlice = createSlice({
             state.error = action.payload as string;
         });
         builder.addCase(loginUser.fulfilled, (state, action) => {
+            if(action.payload.message){
+                state.error = action.payload.message;
+                return;
+            }
             state.user = action.payload as {};
+            state.error = "";
         });
     }
 });
