@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../utils/hooks";
+import { useContext, useState } from "react";
+import { useAppDispatch } from "../../utils/hooks";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { PrimaryBtn } from "../../components/Button/Button";
@@ -34,24 +34,28 @@ export const LoginSection = () => {
     const [ email, setEmail] = useState('');
     const [ password, setPassword] = useState('');
     const [ popup, setPopup ] = useState('');
+    const [ loginError, setLoginError ] = useState('');
     const dispatch = useAppDispatch();
     const nav = useNavigate();
-    const user = useAppSelector(usersReducer => usersReducer.usersReducer.user);
-    const errorUser = useAppSelector(usersReducer => usersReducer.usersReducer.error);
 
     const handleClick = (e: React.SyntheticEvent) => {
         try {
             e.preventDefault();
-            dispatch(loginUser({email, password}));
-            if(errorUser){
-                setPopup("Error");
-                setTimeout(() => setPopup(""), 3000);  
-            } else if(user) {
-                setPopup("Success");
-                setTimeout(() => setPopup(""), 3000);
-                nav('/dashbord/user');
-            }
 
+            const logIn = async () => {
+                const payload = await dispatch(loginUser({email, password})).then(res => res.payload);
+                const { message, id } = payload;
+                if(message){
+                    setPopup("Error");
+                    setLoginError(message);
+                    setTimeout(() => setPopup(""), 3000);  
+                } else if(id) {
+                    setPopup("Success");
+                    setTimeout(() => setPopup(""), 3000);
+                    nav('/dashbord/user');
+                }
+            }
+            logIn();            
         } catch (error) {
             console.error(error);
         }
@@ -68,7 +72,7 @@ export const LoginSection = () => {
              </form>
              <LoginSectionSubHeading>Nie masz konta?</LoginSectionSubHeading>
             <PrimaryBtn onClick={() => nav('/register')}>Zarejestruj się</PrimaryBtn>
-            { popup === "Error" && <MessageModal type="Error" content={errorUser} /> }  
+            { popup === "Error" && <MessageModal type="Error" content={loginError} /> }  
             { popup === "Success" && <MessageModal type="Success" content="Pomyślnie zalogowano" /> }       
         </Wrapper>
     )
