@@ -1,10 +1,12 @@
 import styled from 'styled-components';
 import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
 import { SubHeading } from '../../components/Heading/Heading';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { TaskSection } from '../TasksSection/TasksSection';
 import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
+import { UserContext } from '../../context/UserContext';
+
 
 const Wrapper = styled.main`
     min-height: 100vh;
@@ -59,7 +61,9 @@ enum MainSectionType {
 
 export const MainSection = () => {
 
-    const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project)
+    const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project);
+    const { user, setUser} = useContext(UserContext);
+    
 
     return(
         <Wrapper>

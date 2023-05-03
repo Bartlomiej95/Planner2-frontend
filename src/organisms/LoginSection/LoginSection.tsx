@@ -8,6 +8,7 @@ import { Input } from "../../components/Input/Input";
 import { Paragraph } from "../../components/Paragraph/Paragraph";
 import { loginUser } from "../../store/Users/usersSlice";
 import { MessageModal } from "../../molecules/Modal/MessageModal";
+import { UserContext } from "../../context/UserContext";
 
 const Wrapper = styled.section`
     width: 100%;
@@ -37,6 +38,7 @@ export const LoginSection = () => {
     const [ loginError, setLoginError ] = useState('');
     const dispatch = useAppDispatch();
     const nav = useNavigate();
+    const { user, setUser } = useContext(UserContext);
 
     const handleClick = (e: React.SyntheticEvent) => {
         try {
@@ -51,6 +53,7 @@ export const LoginSection = () => {
                     setTimeout(() => setPopup(""), 3000);  
                 } else if(id) {
                     setPopup("Success");
+                    setUser(payload);
                     setTimeout(() => setPopup(""), 3000);
                     nav('/dashbord/user');
                 }

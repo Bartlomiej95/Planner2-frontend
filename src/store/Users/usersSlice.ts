@@ -32,7 +32,6 @@ export const loginUser = createAsyncThunk(
     async (loginData: { email: string, password: string}) => {
         try {
             const { data } = await api.login(loginData);
-            console.log(data);
             return data;
         } catch (error) {
             console.log(error);

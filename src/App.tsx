@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "styled-components";
+import { ProviderUserContext } from "./context/UserContext";
 import GlobalStyle from "./theme/GlobalStyle";
 import { theme } from "./theme/mainTheme";
 import { ActivateUserPage } from "./views/ActivateUserPage";
@@ -16,6 +17,7 @@ function App() {
     <>
       <GlobalStyle />
       <ThemeProvider theme={theme}>
+      <ProviderUserContext>
         <Router>
           <Routes>
             <Route path="/" element={<HomePage/>}/>
@@ -26,7 +28,7 @@ function App() {
             <Route path="/dashbord/user" element={<UserPage />}/>
           </Routes>
         </Router>
-
+      </ProviderUserContext>
       </ThemeProvider>
     </>
   );
