@@ -63,8 +63,8 @@ export const MainSection = () => {
 
     const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project);
     const { user, setUser} = useContext(UserContext);
-    
 
+    console.log(user);
     return(
         <Wrapper>
             <WrapperNavbar>

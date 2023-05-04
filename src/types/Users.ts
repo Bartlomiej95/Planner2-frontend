@@ -30,3 +30,22 @@ export type ActivationUser = {
     lastName: string;
     position: Position;
 }
+
+export interface IUser {
+    id: string, 
+    firstName: string, 
+    lastName: string,
+    email: string,
+    password: string,
+    userToken: string,
+    userTokenExpiredAt: string,
+    jwtId: string,
+    isActive: boolean,
+    link: string,
+    createdAt: Date,
+    role: string, 
+    position: Position,
+    deparment: string,
+    loggedIn: boolean,
+    companyId: string,
+}
