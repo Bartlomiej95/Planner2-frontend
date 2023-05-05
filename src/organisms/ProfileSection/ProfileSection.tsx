@@ -3,6 +3,10 @@ import { SubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { SliderTheme } from '../../molecules/SliderTheme/SliderTheme';
 import userIcon from '../../assets/user.svg';
+import { useContext, useEffect, useState } from 'react';
+import { useAppSelector } from '../../utils/hooks';
+import { UserContext } from '../../context/UserContext';
+import { IUser } from '../../types/Users';
 
 const Wrapper = styled.section`
     height: 400px;
@@ -56,15 +60,32 @@ const PositionParagprah = styled(Paragraph)`
 
 
 export const ProfileSection = () => {
-    return(
+
+    const [userData, setUserData] = useState<IUser>();
+    const loggedInUser = useAppSelector(reducer => reducer.usersReducer.user);
+    const { user, setUser} = useContext(UserContext);
+
+    useEffect(() => {
+        user ? setUserData(user) : setUserData(loggedInUser as IUser);       
+    }, [user, loggedInUser]);
+
+    if(!userData || Object.keys(userData).length === 0){
+        return(
+            <h2>Wczytywanie danych...</h2>
+        )
+    }else{
+        return(
         <Wrapper>
             <ProfileParagraph>Pamiętaj, aby po zakończonej pracy <SpanLogout>wylogować się</SpanLogout> z konta</ProfileParagraph>
             <BorderImageUser>
                 <ImageUser icon={userIcon} />
             </BorderImageUser>
-            <NameHeading>Jan Kowalski</NameHeading>
-            <PositionParagprah>Stanowisko</PositionParagprah>
+            <NameHeading>{userData.firstName ?? "Imię"} {userData.lastName ?? "Nazwisko"}</NameHeading>
+            <PositionParagprah>{userData.position ?? "Stanowisko"}</PositionParagprah>
             <SliderTheme />
         </Wrapper>
     )
+    }
+
+    
 }

@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
 import { SubHeading } from '../../components/Heading/Heading';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { TaskSection } from '../TasksSection/TasksSection';
 import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
 import { UserContext } from '../../context/UserContext';
+import { useAppSelector } from '../../utils/hooks';
 
 
 const Wrapper = styled.main`
@@ -62,10 +63,20 @@ enum MainSectionType {
 export const MainSection = () => {
 
     const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project);
+    const [userData, setUserData] = useState({});
+    const loggedInUser = useAppSelector(reducer => reducer.usersReducer.user);
     const { user, setUser} = useContext(UserContext);
 
-    console.log(user);
-    return(
+    useEffect(() => {
+        user ? setUserData(user) : setUserData(loggedInUser);       
+    }, [user, loggedInUser]);
+
+    if(!userData){
+        return(
+            <h2>Wczytywanie danych...</h2>
+        )
+    } else{
+        return(
         <Wrapper>
             <WrapperNavbar>
                 <InnerNavbar 
@@ -106,4 +117,7 @@ export const MainSection = () => {
             </WrapperHelpdeskInfo>
         </Wrapper>
     )
+    }
+
+    
 }
