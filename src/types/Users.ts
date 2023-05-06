@@ -49,3 +49,10 @@ export interface IUser {
     loggedIn: boolean,
     companyId: string,
 }
+
+export enum Role {
+    test = 'test',
+    user = 'user',
+    manager = 'manager',
+    owner = 'owner',
+}

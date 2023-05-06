@@ -97,6 +97,9 @@ export const InnerNavbar = ({ typeFn, valueOfType }: Props) => {
                 <DivElemNavbar active={ valueOfType === MainSectionType.Tasks } onClick={() => typeFn(MainSectionType.Tasks)} shift={arrowOptions}>
                     <NavSubHeading active={ valueOfType === MainSectionType.Tasks } >Lista zadań</NavSubHeading>
                 </DivElemNavbar>
+                <DivElemNavbar active={ valueOfType === MainSectionType.ProjectManager } onClick={() => typeFn(MainSectionType.ProjectManager)} shift={arrowOptions}>
+                    <NavSubHeading active={ valueOfType === MainSectionType.ProjectManager } >Zarządzaj Projektami</NavSubHeading>
+                </DivElemNavbar>
             </WrapperNavbar>
             { arrowOptions < 1 && <ArrowRight src={rightArrow} onClick={() => setArrowOptions(prev => prev = prev + 1)} /> }
         </Wrapper>

@@ -7,6 +7,7 @@ import { ActivateUserPage } from "./views/ActivateUserPage";
 import { HomePage } from "./views/HomePage";
 import { LoginPage } from "./views/LoginPage";
 import { LogoutPage } from "./views/LogoutPage";
+import { NewProjectPage } from "./views/NewProjectPage";
 import { RegisterPage } from "./views/RegisterPage";
 import { UserPage } from "./views/UserPage";
 
@@ -26,6 +27,7 @@ function App() {
             <Route path="/activate/:link" element={<ActivateUserPage/>}/>
             <Route path="/logout" element={<LogoutPage />}/>
             <Route path="/dashbord/user" element={<UserPage />}/>
+            <Route path="/dashbord/project/new" element={<NewProjectPage />}/>
           </Routes>
         </Router>
       </ProviderUserContext>

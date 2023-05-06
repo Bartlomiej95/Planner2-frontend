@@ -7,6 +7,9 @@ import { TaskSection } from '../TasksSection/TasksSection';
 import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
 import { UserContext } from '../../context/UserContext';
 import { useAppSelector } from '../../utils/hooks';
+import { IUser, Role } from '../../types/Users';
+import { PrimaryBtn } from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 const Wrapper = styled.main`
@@ -52,6 +55,11 @@ const SpanHelpdesk = styled.span`
     cursor: pointer;
 `;
 
+const BtnCreateProject = styled(PrimaryBtn)`
+    width: 214px;
+    margin-bottom: 45px;
+`;
+
 enum MainSectionType {
     Project = 'project',
     Archives = 'archives',
@@ -63,15 +71,17 @@ enum MainSectionType {
 export const MainSection = () => {
 
     const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project);
-    const [userData, setUserData] = useState({});
+    const [userData, setUserData] = useState<IUser>();
     const loggedInUser = useAppSelector(reducer => reducer.usersReducer.user);
     const { user, setUser} = useContext(UserContext);
+    const nav = useNavigate();
+    
 
     useEffect(() => {
-        user ? setUserData(user) : setUserData(loggedInUser);       
+        user ? setUserData(user as IUser) : setUserData(loggedInUser as IUser);       
     }, [user, loggedInUser]);
 
-    if(!userData){
+    if(!userData || Object.keys(userData).length === 0){
         return(
             <h2>Wczytywanie danych...</h2>
         )
@@ -108,6 +118,13 @@ export const MainSection = () => {
                     <WrapperProjectCard>
                        <TaskSection />
                        <h2>Zadania</h2>
+                    </WrapperProjectCard>
+                )
+            }
+            {
+                (userData.role === Role.manager || userData.role === Role.owner ) && typeOfMainSection === MainSectionType.ProjectManager && (
+                    <WrapperProjectCard>
+                       <BtnCreateProject onClick={() => nav('/dashbord/project/new')} > Dodaj nowy projekt </BtnCreateProject>
                     </WrapperProjectCard>
                 )
             }
