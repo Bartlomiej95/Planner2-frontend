@@ -6,10 +6,12 @@ import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { TaskSection } from '../TasksSection/TasksSection';
 import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
 import { UserContext } from '../../context/UserContext';
-import { useAppSelector } from '../../utils/hooks';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { IUser, Role } from '../../types/Users';
 import { PrimaryBtn } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { fetchUsersFromCompany } from '../../store/Users/usersSlice';
 
 
 const Wrapper = styled.main`
@@ -75,11 +77,17 @@ export const MainSection = () => {
     const loggedInUser = useAppSelector(reducer => reducer.usersReducer.user);
     const { user, setUser} = useContext(UserContext);
     const nav = useNavigate();
+    const dispatch = useAppDispatch();
     
 
     useEffect(() => {
         user ? setUserData(user as IUser) : setUserData(loggedInUser as IUser);       
     }, [user, loggedInUser]);
+
+    useEffect(() => {
+        dispatch(fetchUsersFromCompany());
+    }, 
+    [])
 
     if(!userData || Object.keys(userData).length === 0){
         return(

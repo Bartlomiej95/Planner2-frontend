@@ -11,3 +11,4 @@ export const activateNewUser = (data: ActivationUser) => axios.post(`${domain}/a
 export const createNewCompany = (data: NewCompanyType) => axios.post(`${domain}/company`, { ...data });
 export const login = (data: {email: string, password: string}) => axios.post(`${domain}/login`, { ...data }, { withCredentials: true});
 export const logout = () => axios.delete(`${domain}/logout`, { withCredentials: true});
+export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });

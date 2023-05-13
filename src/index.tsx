@@ -1,13 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import storage from 'redux-persist/lib/storage';
+import reportWebVitals from './reportWebVitals';
+import reducers from './store/index';
+import App from './App';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { persistReducer, persistStore } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
-import storage from 'redux-persist/lib/storage';
-import reducers from './store/index';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 const persistConfig = {
   key: 'root',

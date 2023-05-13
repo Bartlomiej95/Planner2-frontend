@@ -21,10 +21,13 @@ export const createNewCompany = createAsyncThunk(
     }
 )
 
+
 const initialState = {
     companies: [], 
     company: {},
     error: "",
+    departments: [{ name: "graphic", isActive: false}, { name: "marketing", isActive: false}, { name: "programming", isActive: false},
+        { name: "administration", isActive: false}, { name: "tester", isActive: false}, { name: "sales", isActive: false}],
 };
 
 export const companiesSlice = createSlice({
@@ -33,6 +36,14 @@ export const companiesSlice = createSlice({
     reducers: {
         addCompany: (state, action: PayloadAction<[]>) => {
             // state.companies = action.payload;
+        },
+        switchActiveDepartment: (state, action) => {
+            state.departments = state.departments.map(item => {
+                if(item.name === action.payload.name){
+                    item.isActive = action.payload.isActive;
+                }
+                return item;
+            });
         }
     },
 
@@ -65,7 +76,7 @@ export const companiesSlice = createSlice({
     }
 });
 
-export const { addCompany } = companiesSlice.actions;
+export const { addCompany, switchActiveDepartment } = companiesSlice.actions;
 export const getAllCompanies = (state: RootState) => state.companiesReducer.companies;
 
 export default companiesSlice.reducer;

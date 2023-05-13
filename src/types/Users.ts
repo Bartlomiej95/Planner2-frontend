@@ -45,7 +45,7 @@ export interface IUser {
     createdAt: Date,
     role: string, 
     position: Position,
-    deparment: string,
+    department: string,
     loggedIn: boolean,
     companyId: string,
 }

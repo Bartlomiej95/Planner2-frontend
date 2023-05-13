@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from "../../api/index";
-import { ActivationUser } from "../../types/Users";
+import { ActivationUser, IUser } from "../../types/Users";
 
 export const createNewUser = createAsyncThunk(
     "users/createNewUser",
@@ -39,9 +39,22 @@ export const loginUser = createAsyncThunk(
     }
 )
 
+export const fetchUsersFromCompany = createAsyncThunk(
+    "users/fetchUsersFromCompany",
+    async () => {
+        try {
+            const { data } = await api.fetchUsersFromCompany();
+            console.log(data);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
 
 const initialState = {
-    usersInCompany: [],
+    usersInCompany: [] as IUser[],
     user: {},
     error: "",
     message: "",
@@ -95,6 +108,17 @@ export const usersSlice = createSlice({
             }
             state.user = action.payload as {};
             state.error = "";
+        });
+
+        builder.addCase(fetchUsersFromCompany.pending, (state, action) => {
+            console.log("Pending");
+        });
+        builder.addCase(fetchUsersFromCompany.rejected, (state, action) => {
+            console.log("Rejected");
+            state.error = action.payload as string;
+        });
+        builder.addCase(fetchUsersFromCompany.fulfilled, (state, action) => {
+            state.usersInCompany = action.payload;
         });
     }
 });

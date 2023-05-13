@@ -78,9 +78,9 @@ export const ProjectCard = () => {
                 <Paragraph>Stopień ukończenia projektu</Paragraph>
             </WrapperProjectCompletePercent>
             <WrapperLabels>
-                <Label division="Marketing" />
-                <Label division="Konsultacja" />
-                <Label division="UX/UI" />
+                <Label division="Marketing" getStatus={ () => console.log('')}/>
+                <Label division="Konsultacja" getStatus={ () => console.log('')} />
+                <Label division="UX/UI" getStatus={ () => console.log('')}/>
             </WrapperLabels>
             <LabelCard>Zespół</LabelCard>
         </Wrapper>
