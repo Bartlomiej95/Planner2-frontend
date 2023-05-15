@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { PrimaryBtn } from "../components/Button/Button";
 import { Heading, SubHeading } from "../components/Heading/Heading";
 import { Input } from "../components/Input/Input";
 import TextArea from "../components/TextArea/TextArea";
 import Header from "../organisms/Header/Header"
 import { LabelSection } from "../organisms/LabelSection/LabelSection";
-import { IProject } from "../types/Projects";
-import { useAppSelector } from "../utils/hooks";
-import companiesSlice from "../store/Companies/companiesSlice";
-import { usersReducer } from "../store/Users/reducer";
+import { NewProject } from "../types/Projects";
+import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { IUser } from "../types/Users";
 import { PersonToProject } from "../molecules/PersonToProject/PersonToProject";
+import { createNewProject } from "../store/Projects/projectsSlice";
+import { MessageModal } from "../molecules/Modal/MessageModal";
 
 const ProjectFormWrapper = styled.div`
     max-width: 275px;
@@ -45,27 +46,26 @@ const initialNewProject = {
     content: '',
     assumptions: '',
     users: [],
-    tasks: [],
-    departments:[],
 }
-
-type newProject = Omit<IProject, "id">;
 
 export const NewProjectPage = () => {
 
-    const [projectData, setProjectData] = useState<newProject>(initialNewProject);
+    const [projectData, setProjectData] = useState<NewProject>(initialNewProject);
     const [ status, setStatus] = useState(false);
     const [ userFromActiveDepartments, setUserFromActiveDepartments] = useState<IUser[]>([]);
-    const [ assignPerson, setAssignPerson ] = useState<string[]>([])
+    const [ assignPerson, setAssignPerson ] = useState<string[]>([]);
+    const [ popup, setPopup] = useState('');
+    const [ projectError, setProjectError ] = useState('');
     const departments = useAppSelector(companiesSlice => companiesSlice.companiesReducer.departments);
     const usersInCompany = useAppSelector(usersReducer => usersReducer.usersReducer.usersInCompany);
+    const dispatch = useAppDispatch();
+    const nav = useNavigate();
 
     const nameActiveDepartments = departments.map(item => {
         if(item.isActive){
             return item.name;
         }
     }).filter(item => item) as string[];
-    console.log(nameActiveDepartments);
 
     const handleChange = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -76,10 +76,8 @@ export const NewProjectPage = () => {
             [target.name]:target.value
         });
     }
-    console.log(status);
 
     useEffect(() => {
-        console.log('refresh');
         const searchedUsers = usersInCompany.map(user => {
             if(nameActiveDepartments.includes(user.department)){
                 return user;
@@ -127,17 +125,40 @@ export const NewProjectPage = () => {
         setAssignPerson(stillAssignmentPerson);
     }
 
+    const handleSubmit = (e: React.SyntheticEvent) => {
+        try {
+            e.preventDefault();
+            const newProject = async () => {
+                const payload = await dispatch(createNewProject(projectData)).then(res => res.payload);
+                if(payload.ok){
+                    setPopup("Success");
+                    setTimeout(() => {
+                        nav('/dashbord/user');
+                    },1);
+                } else {
+                    setPopup("Error");
+                }
+                setTimeout(() => setPopup(""), 3000);
+                setProjectError(payload.message);
+            }
+            newProject();
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return(
         <>
             <Header />
             <ProjectFormWrapper>
                 <Heading>Nowy projekt</Heading>
-                <Form id="project-form">
+                <Form id="project-form" onSubmit={(e) => handleSubmit(e)}>
                     <Input placeholder="Nazwa projektu" type="string" name="title" onChange={ (e) => handleChange(e) } value={projectData.title} />
                     <Input placeholder="Klient" type="string" name="customer" onChange={ (e) => handleChange(e)} value={projectData.customer} />
                     <Input placeholder="Termin oddania projektu" type="date" name="deadline" onChange={ (e) => handleChange(e) } value={projectData.deadline} />
                     <Input placeholder="Ilość godzin na projekt" type="number" name="hours" onChange={ (e) => handleChange(e) } value={projectData.hours} />
-                    <Input placeholder="Wartość projektu w PLN" type="number" name="projectValue" onChange={ (e) => handleChange(e) } value={projectData.value} />
+                    <Input placeholder="Wartość projektu w PLN" type="number" name="value" onChange={ (e) => handleChange(e) } value={projectData.value} />
                     <SubHeading>Opisz założenia projektowe</SubHeading>
                     <TextArea placeholder="Treść wiadomości" name="assumptions" onChange={(e) => handleChange(e)} value={projectData.assumptions} />
                 </Form>
@@ -163,6 +184,8 @@ export const NewProjectPage = () => {
                 <TextArea placeholder="Treść wiadomości" form="project-form" name="content" onChange={(e) => handleChange(e)} value={projectData.content} />
             </MarksSection>
             <CreateBtn form="project-form">Utwórz projekt</CreateBtn>
+            { popup === "Error" && <MessageModal type="Error" content={projectError} /> }  
+            { popup === "Success" && <MessageModal type="Success" content="Stworzono nowy projekt" /> } 
         </>
     )
 }

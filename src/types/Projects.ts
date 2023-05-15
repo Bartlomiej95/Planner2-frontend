@@ -11,3 +11,14 @@ export interface IProject {
     tasks: string[] | [];
     departments: string[] | [];
 }
+
+export type NewProject = {
+    title: string,
+    customer: string,
+    value: number,
+    hours: number,
+    assumptions: string,
+    content: string,
+    deadline: string,
+    users: string[] | [],
+}

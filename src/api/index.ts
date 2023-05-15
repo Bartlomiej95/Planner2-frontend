@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { NewCompanyType } from '../types/Companies';
 import { ActivationUser } from '../types/Users';
+import { NewProject } from '../types/Projects';
 
 const domain = 'http://localhost:3001';
 
@@ -12,3 +13,4 @@ export const createNewCompany = (data: NewCompanyType) => axios.post(`${domain}/
 export const login = (data: {email: string, password: string}) => axios.post(`${domain}/login`, { ...data }, { withCredentials: true});
 export const logout = () => axios.delete(`${domain}/logout`, { withCredentials: true});
 export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });
+export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
