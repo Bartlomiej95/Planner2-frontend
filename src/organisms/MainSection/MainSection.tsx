@@ -12,6 +12,7 @@ import { PrimaryBtn } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchUsersFromCompany } from '../../store/Users/usersSlice';
+import { fetchAllProjects } from '../../store/Projects/projectsSlice';
 
 
 const Wrapper = styled.main`
@@ -86,6 +87,7 @@ export const MainSection = () => {
 
     useEffect(() => {
         dispatch(fetchUsersFromCompany());
+        dispatch(fetchAllProjects());
     }, 
     [])
 

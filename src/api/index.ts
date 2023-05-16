@@ -14,3 +14,4 @@ export const login = (data: {email: string, password: string}) => axios.post(`${
 export const logout = () => axios.delete(`${domain}/logout`, { withCredentials: true});
 export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });
 export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
+export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });
