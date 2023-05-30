@@ -3,7 +3,7 @@ import userIcon from '../../assets/user.svg';
 import acceptingIcon from '../../assets/accept.svg';
 import { SubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 const Wrapper = styled.div`
@@ -70,12 +70,18 @@ interface IProps {
     lastName: string,
     position: string,
     assignUserToProject: (id: string) => void,
+    isEdited: boolean,
 }
 
 
-export const PersonToProject = ({ id, firstName, lastName, position, assignUserToProject }: IProps) => {
+export const PersonToProject = ({ id, firstName, lastName, position, assignUserToProject, isEdited }: IProps) => {
 
     const [ isAccept, setIsAccept ] = useState(false);
+
+    useEffect(() => {
+        console.log('isEdited in Person', isEdited)
+        setIsAccept(isEdited)
+    },[])
 
     const handleClick = () => {
         setIsAccept(prev => !prev);

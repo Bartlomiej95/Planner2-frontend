@@ -28,6 +28,7 @@ function App() {
             <Route path="/logout" element={<LogoutPage />}/>
             <Route path="/dashbord/user" element={<UserPage />}/>
             <Route path="/dashbord/project/new" element={<NewProjectPage />}/>
+            <Route path="/dashbord/project/edit" element={<NewProjectPage />}/>
           </Routes>
         </Router>
       </ProviderUserContext>

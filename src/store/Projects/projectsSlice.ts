@@ -1,6 +1,7 @@
 import * as api from '../../api/index';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { NewProject } from "../../types/Projects";
+import { RootState } from '../..';
 
 export const createNewProject = createAsyncThunk(
     "projects/createNewProject",
@@ -36,7 +37,7 @@ export const projectsSlice = createSlice({
    name: "projects",
    initialState,
    reducers: {
-
+    
    },
 
    extraReducers: (builder) => {
@@ -63,5 +64,7 @@ export const projectsSlice = createSlice({
     });
    }
 });
+
+export const getAllProjects = (state: RootState) => state.projectsReducer.projects; 
 
 export default projectsSlice.reducer;

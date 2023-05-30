@@ -13,6 +13,9 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { fetchUsersFromCompany } from '../../store/Users/usersSlice';
 import { fetchAllProjects } from '../../store/Projects/projectsSlice';
+import { reduceEachLeadingCommentRange } from 'typescript';
+import { IProject } from '../../types/Projects';
+import { ArchivesCard } from '../../molecules/ArchivesCard/ArchivesCard';
 
 
 const Wrapper = styled.main`
@@ -63,6 +66,10 @@ const BtnCreateProject = styled(PrimaryBtn)`
     margin-bottom: 45px;
 `;
 
+const PMSubHeading = styled(SubHeading)`
+    margin-bottom: 30px;
+`;
+
 enum MainSectionType {
     Project = 'project',
     Archives = 'archives',
@@ -76,6 +83,7 @@ export const MainSection = () => {
     const [typeOfMainSection, setTypeOfMainSection] = useState(MainSectionType.Project);
     const [userData, setUserData] = useState<IUser>();
     const loggedInUser = useAppSelector(reducer => reducer.usersReducer.user);
+    const projects = useAppSelector(reducer => reducer.projectsReducer.projects) as IProject[];
     const { user, setUser} = useContext(UserContext);
     const nav = useNavigate();
     const dispatch = useAppDispatch();
@@ -135,6 +143,23 @@ export const MainSection = () => {
                 (userData.role === Role.manager || userData.role === Role.owner ) && typeOfMainSection === MainSectionType.ProjectManager && (
                     <WrapperProjectCard>
                        <BtnCreateProject onClick={() => nav('/dashbord/project/new')} > Dodaj nowy projekt </BtnCreateProject>
+                       <PMSubHeading>Aktualne projekty</PMSubHeading>
+                       {
+                            projects.map(project => (
+                                <ArchivesCard 
+                                    key={project.id}
+                                    id={project.id}
+                                    title={project.title}
+                                    customer={project.customer}
+                                    deadline={project.deadline}
+                                    hours={project.hours}
+                                    value={project.value}
+                                    content={project.content}
+                                    assumptions={project.assumptions}
+                                    users={project.users}
+                                />
+                            ))
+                       }
                     </WrapperProjectCard>
                 )
             }

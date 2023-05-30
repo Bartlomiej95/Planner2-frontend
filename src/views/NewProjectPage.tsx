@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PrimaryBtn } from "../components/Button/Button";
 import { Heading, SubHeading } from "../components/Heading/Heading";
 import { Input } from "../components/Input/Input";
@@ -48,7 +48,19 @@ const initialNewProject = {
     users: [],
 }
 
-export const NewProjectPage = () => {
+type editedLocState = {
+    id: string,
+    title: string, 
+    customer: string, 
+    deadline: string,
+    hours: number,
+    value: number,
+    content: string, 
+    assumptions: string,
+    users: IUser[],
+}
+
+export const NewProjectPage = (props: any) => {
 
     const [projectData, setProjectData] = useState<NewProject>(initialNewProject);
     const [ status, setStatus] = useState(false);
@@ -56,16 +68,40 @@ export const NewProjectPage = () => {
     const [ assignPerson, setAssignPerson ] = useState<string[]>([]);
     const [ popup, setPopup] = useState('');
     const [ projectError, setProjectError ] = useState('');
+    const [ isEdited, setIsEdited ] = useState(false);
+    const [ dataFromEditWasLoaded, setDataFromEditWasLoaded ] = useState(false);
     const departments = useAppSelector(companiesSlice => companiesSlice.companiesReducer.departments);
     const usersInCompany = useAppSelector(usersReducer => usersReducer.usersReducer.usersInCompany);
     const dispatch = useAppDispatch();
     const nav = useNavigate();
-
+    const location = useLocation();
+    const { id, title, customer, deadline, hours, value, content, assumptions, users }: editedLocState = location.state;
+    const usersId = users.map(user => user.id);
     const nameActiveDepartments = departments.map(item => {
         if(item.isActive){
             return item.name;
         }
     }).filter(item => item) as string[];
+    
+    useEffect(() => {
+        if(id){ 
+            setIsEdited(true);
+            setProjectData({ title, customer, deadline, hours, value, content, assumptions, users: usersId});
+            setAssignPerson(usersId);
+            setDataFromEditWasLoaded(true);
+        }
+    }, []);
+    
+    useEffect(() => {
+         const searchedUsers = usersInCompany.map(user => {
+            if(nameActiveDepartments.includes(user.department)){
+                return user;
+            }
+        }).filter(user => user) as IUser[];
+        setUserFromActiveDepartments(searchedUsers);
+        assignmentValidity();
+    
+    }, [status]);
 
     const handleChange = (e: React.SyntheticEvent) => {
         e.preventDefault();
@@ -76,17 +112,6 @@ export const NewProjectPage = () => {
             [target.name]:target.value
         });
     }
-
-    useEffect(() => {
-        const searchedUsers = usersInCompany.map(user => {
-            if(nameActiveDepartments.includes(user.department)){
-                return user;
-            }
-        }).filter(user => user) as IUser[];
-        setUserFromActiveDepartments(searchedUsers);
-        assignmentValidity();
-
-    }, [status]);
 
     const handleAssignmentUserToProject = (id: string) => {
          // sprawdzamy czy jakiś użytkownik nie został wcześniej do projektu przypisany
@@ -113,6 +138,11 @@ export const NewProjectPage = () => {
     }
 
     const assignmentValidity = () => {
+
+        if(!dataFromEditWasLoaded){
+            // turn off this validation function for first rendering edited project 
+            return;
+        }
         const newArrayOfAssignPerson = assignPerson;
         const stillAssignmentPerson = usersInCompany.map(user => {
             if(newArrayOfAssignPerson.includes(user.id)){
@@ -152,7 +182,11 @@ export const NewProjectPage = () => {
         <>
             <Header />
             <ProjectFormWrapper>
-                <Heading>Nowy projekt</Heading>
+                <Heading>
+                    {
+                        isEdited ? title : "Nowy projekt"
+                    }
+                </Heading>
                 <Form id="project-form" onSubmit={(e) => handleSubmit(e)}>
                     <Input placeholder="Nazwa projektu" type="string" name="title" onChange={ (e) => handleChange(e) } value={projectData.title} />
                     <Input placeholder="Klient" type="string" name="customer" onChange={ (e) => handleChange(e)} value={projectData.customer} />
@@ -175,6 +209,7 @@ export const NewProjectPage = () => {
                             lastName={item.lastName}
                             position={item.position}
                             assignUserToProject={ () => handleAssignmentUserToProject(item.id)}
+                            isEdited={usersId.includes(item.id)}
                         />
                     )
                 }
@@ -183,7 +218,7 @@ export const NewProjectPage = () => {
                 <SubHeading>Przekaż wytyczne<br /> dotyczące projektu</SubHeading>
                 <TextArea placeholder="Treść wiadomości" form="project-form" name="content" onChange={(e) => handleChange(e)} value={projectData.content} />
             </MarksSection>
-            <CreateBtn form="project-form">Utwórz projekt</CreateBtn>
+            <CreateBtn form="project-form">{ isEdited ? "Edytuj projekt" : "Utwórz projekt" }</CreateBtn>
             { popup === "Error" && <MessageModal type="Error" content={projectError} /> }  
             { popup === "Success" && <MessageModal type="Success" content="Stworzono nowy projekt" /> } 
         </>
