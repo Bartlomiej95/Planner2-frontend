@@ -10,6 +10,7 @@ import { LogoutPage } from "./views/LogoutPage";
 import { NewProjectPage } from "./views/NewProjectPage";
 import { RegisterPage } from "./views/RegisterPage";
 import { UserPage } from "./views/UserPage";
+import { EditProjectPage } from "./views/EditProjectPage";
 
 function App() {
 
@@ -28,7 +29,7 @@ function App() {
             <Route path="/logout" element={<LogoutPage />}/>
             <Route path="/dashbord/user" element={<UserPage />}/>
             <Route path="/dashbord/project/new" element={<NewProjectPage />}/>
-            <Route path="/dashbord/project/edit" element={<NewProjectPage />}/>
+            <Route path="/dashbord/project/edit" element={<EditProjectPage />}/>
           </Routes>
         </Router>
       </ProviderUserContext>

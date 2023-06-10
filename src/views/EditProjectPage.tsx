@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { PrimaryBtn } from "../components/Button/Button";
 import { Heading, SubHeading } from "../components/Heading/Heading";
 import { Input } from "../components/Input/Input";
 import TextArea from "../components/TextArea/TextArea";
 import Header from "../organisms/Header/Header"
 import { LabelSection } from "../organisms/LabelSection/LabelSection";
-import { NewProject } from "../types/Projects";
+import { UpdateProject } from "../types/Projects";
 import { useAppDispatch, useAppSelector } from "../utils/hooks";
 import { IUser } from "../types/Users";
 import { PersonToProject } from "../molecules/PersonToProject/PersonToProject";
-import { createNewProject } from "../store/Projects/projectsSlice";
+import { createNewProject, updateProject } from "../store/Projects/projectsSlice";
 import { MessageModal } from "../molecules/Modal/MessageModal";
 
 const ProjectFormWrapper = styled.div`
@@ -37,7 +37,8 @@ const CreateBtn = styled(PrimaryBtn)`
     margin-bottom: 40px;
 `;
 
-const initialNewProject = {
+const initialData = {
+    id: "",
     title: "",
     customer: "",
     deadline: "",
@@ -48,9 +49,21 @@ const initialNewProject = {
     users: [],
 }
 
-export const NewProjectPage = (props: any) => {
+type editedLocState = {
+    id: string,
+    title: string, 
+    customer: string, 
+    deadline: string,
+    hours: number,
+    value: number,
+    content: string, 
+    assumptions: string,
+    users: IUser[],
+}
 
-    const [projectData, setProjectData] = useState<NewProject>(initialNewProject);
+export const EditProjectPage = (props: any) => {
+
+    const [ projectData, setProjectData ] = useState<UpdateProject>(initialData);
     const [ status, setStatus] = useState(false);
     const [ userFromActiveDepartments, setUserFromActiveDepartments] = useState<IUser[]>([]);
     const [ assignPerson, setAssignPerson ] = useState<string[]>([]);
@@ -60,11 +73,19 @@ export const NewProjectPage = (props: any) => {
     const usersInCompany = useAppSelector(usersReducer => usersReducer.usersReducer.usersInCompany);
     const dispatch = useAppDispatch();
     const nav = useNavigate();
+    const location = useLocation();
+    const { id, title, customer, deadline, hours, value, content, assumptions, users }: editedLocState = location.state;
+    const usersId = users.map(user => user.id);
     const nameActiveDepartments = departments.map(item => {
         if(item.isActive){
             return item.name;
         }
     }).filter(item => item) as string[];
+    
+    useEffect(() => {
+            setProjectData({ id, title, customer, deadline, hours, value, content, assumptions, users: usersId});
+            setAssignPerson(usersId);        
+    }, []);
     
     useEffect(() => {
          const searchedUsers = usersInCompany.map(user => {
@@ -95,11 +116,11 @@ export const NewProjectPage = (props: any) => {
             if(foundExistingId){
                 // jeśli istnieje, to musimy go usunąć z tablicy
                 const filteredArray = assignPerson.filter(item => item !== id );
-                
                 setProjectData({
                     ...projectData,
                     users: filteredArray,
                 })
+
                 return setAssignPerson(filteredArray) // zwracamy tablicę bez usuniętego id              
             }
         }
@@ -128,22 +149,20 @@ export const NewProjectPage = (props: any) => {
     const handleSubmit = (e: React.SyntheticEvent) => {
         try {
             e.preventDefault();
-
-            const newProject = async () => {
-            const payload = await dispatch(createNewProject(projectData)).then(res => res.payload);
-            if(payload.ok){
-                setPopup("Success");
-                setTimeout(() => {
-                    nav('/dashbord/user');
-                },1);
-            } else {
-                setPopup("Error");
-            }
-            setTimeout(() => setPopup(""), 3000);
-            setProjectError(payload.message);
-            }
-            newProject();
-
+                const update = async () => {
+                    const payload = await dispatch(updateProject(projectData)).then(res => res.payload);
+                    if(payload.ok){
+                        setPopup("Success");
+                        setTimeout(() => {
+                            nav('/dashbord/user');
+                        },1);
+                    } else {
+                        setPopup("Error");
+                    }
+                    setTimeout(() => setPopup(""), 3000);
+                    setProjectError(payload.message);
+                }
+                update();        
         } catch (error) {
             console.log(error);
         }
@@ -153,7 +172,7 @@ export const NewProjectPage = (props: any) => {
         <>
             <Header />
             <ProjectFormWrapper>
-                <Heading>Nowy projekt</Heading>
+                <Heading>{title}</Heading>
                 <Form id="project-form" onSubmit={(e) => handleSubmit(e)}>
                     <Input placeholder="Nazwa projektu" type="string" name="title" onChange={ (e) => handleChange(e) } value={projectData.title} />
                     <Input placeholder="Klient" type="string" name="customer" onChange={ (e) => handleChange(e)} value={projectData.customer} />
@@ -176,7 +195,7 @@ export const NewProjectPage = (props: any) => {
                             lastName={item.lastName}
                             position={item.position}
                             assignUserToProject={ () => handleAssignmentUserToProject(item.id)}
-                            isEdited={false}
+                            isEdited={usersId.includes(item.id)}
                         />
                     )
                 }
@@ -185,7 +204,7 @@ export const NewProjectPage = (props: any) => {
                 <SubHeading>Przekaż wytyczne<br /> dotyczące projektu</SubHeading>
                 <TextArea placeholder="Treść wiadomości" form="project-form" name="content" onChange={(e) => handleChange(e)} value={projectData.content} />
             </MarksSection>
-            <CreateBtn form="project-form">Utwórz projekt</CreateBtn>
+            <CreateBtn form="project-form">Edytuj projekt</CreateBtn>
             { popup === "Error" && <MessageModal type="Error" content={projectError} /> }  
             { popup === "Success" && <MessageModal type="Success" content="Stworzono nowy projekt" /> } 
         </>

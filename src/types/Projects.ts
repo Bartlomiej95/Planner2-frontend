@@ -22,3 +22,7 @@ export type NewProject = {
     deadline: string,
     users: string[] | [],
 }
+
+export type UpdateProject = NewProject & {
+    id: string,
+}
