@@ -11,6 +11,7 @@ import { NewProjectPage } from "./views/NewProjectPage";
 import { RegisterPage } from "./views/RegisterPage";
 import { UserPage } from "./views/UserPage";
 import { EditProjectPage } from "./views/EditProjectPage";
+import { DetailsProject } from "./views/DetailsProject";
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/dashbord/user" element={<UserPage />}/>
             <Route path="/dashbord/project/new" element={<NewProjectPage />}/>
             <Route path="/dashbord/project/edit" element={<EditProjectPage />}/>
+            <Route path="/dashbord/project/:name" element={<DetailsProject />}/>
           </Routes>
         </Router>
       </ProviderUserContext>

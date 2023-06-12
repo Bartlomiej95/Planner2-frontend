@@ -39,6 +39,17 @@ export const updateProject = createAsyncThunk(
     }
 );
 
+export const getProject = createAsyncThunk(
+    "projects/getProject",
+    async (id: string) => {
+        try {
+            const { data } = await api.getProject(id);
+            return data;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
 
 const initialState = {
     project: {},
@@ -86,9 +97,21 @@ export const projectsSlice = createSlice({
         console.log("Success");
         state.projects = action.payload;
     });
+
+    builder.addCase(getProject.pending, (state, action) => {
+        console.log("Pending");
+    });
+    builder.addCase(getProject.rejected, (state, action) => {
+        console.log("Rejected");
+    });
+    builder.addCase(getProject.fulfilled, (state, action) => {
+        console.log("Success");
+        state.project = action.payload;
+    });
    }
 });
 
 export const getAllProjects = (state: RootState) => state.projectsReducer.projects; 
+export const getOneProject = (state: RootState) => state.projectsReducer.project;
 
 export default projectsSlice.reducer;

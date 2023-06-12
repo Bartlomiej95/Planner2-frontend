@@ -16,3 +16,4 @@ export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, 
 export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
 export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });
 export const updateProject = (data: NewProject) => axios.patch(`${domain}/project`, data, { withCredentials: true });
+export const getProject = (id: string) => axios.get(`${domain}/project/${id}`, { withCredentials: true });

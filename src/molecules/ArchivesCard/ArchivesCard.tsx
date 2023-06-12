@@ -50,9 +50,6 @@ export const ArchivesCard = ({ id, title, customer, deadline, hours, value, cont
 
     const nav = useNavigate();
 
-    const handleDetailsProjectClick = () => {
-        
-    }
     
     return(
         <Wrapper>
@@ -60,7 +57,7 @@ export const ArchivesCard = ({ id, title, customer, deadline, hours, value, cont
             <WrapperLinkInCard>
                 <LinkInCard onClick={() => nav('/dashbord/project/edit', { state: { id, title, customer, deadline, hours, value, content, assumptions, users } })}>Edytuj</LinkInCard>
                 <LinkInCard onClick={() => nav('/task/new')}>Przydziel zadania</LinkInCard>
-                <LinkInCard onClick={() => handleDetailsProjectClick()}>Szczegóły</LinkInCard>
+                <LinkInCard onClick={() => nav(`/dashbord/project/${title}`, { state: { id }})}>Szczegóły</LinkInCard>
             </WrapperLinkInCard>
         </Wrapper>
     )
