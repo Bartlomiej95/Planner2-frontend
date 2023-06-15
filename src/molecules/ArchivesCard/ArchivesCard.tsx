@@ -56,7 +56,7 @@ export const ArchivesCard = ({ id, title, customer, deadline, hours, value, cont
             <CardHeading>{ title }</CardHeading>
             <WrapperLinkInCard>
                 <LinkInCard onClick={() => nav('/dashbord/project/edit', { state: { id, title, customer, deadline, hours, value, content, assumptions, users } })}>Edytuj</LinkInCard>
-                <LinkInCard onClick={() => nav('/task/new')}>Przydziel zadania</LinkInCard>
+                <LinkInCard onClick={() => nav('/dashbord/task/new', { state: { id, title, hours, users } }) }>Przydziel zadania</LinkInCard>
                 <LinkInCard onClick={() => nav(`/dashbord/project/${title}`, { state: { id }})}>Szczegóły</LinkInCard>
             </WrapperLinkInCard>
         </Wrapper>

@@ -12,6 +12,7 @@ import { RegisterPage } from "./views/RegisterPage";
 import { UserPage } from "./views/UserPage";
 import { EditProjectPage } from "./views/EditProjectPage";
 import { DetailsProject } from "./views/DetailsProject";
+import { NewTaskPage } from "./views/NewTaskPage";
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/dashbord/project/new" element={<NewProjectPage />}/>
             <Route path="/dashbord/project/edit" element={<EditProjectPage />}/>
             <Route path="/dashbord/project/:name" element={<DetailsProject />}/>
+            <Route path="/dashbord/task/new" element={<NewTaskPage/>} />
           </Routes>
         </Router>
       </ProviderUserContext>

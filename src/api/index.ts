@@ -2,6 +2,7 @@ import axios from 'axios';
 import { NewCompanyType } from '../types/Companies';
 import { ActivationUser } from '../types/Users';
 import { NewProject } from '../types/Projects';
+import { InitialNewTask } from '../types/Tasks';
 
 const domain = 'http://localhost:3001';
 
@@ -17,3 +18,4 @@ export const createNewProject = (data: NewProject) => axios.post(`${domain}/proj
 export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });
 export const updateProject = (data: NewProject) => axios.patch(`${domain}/project`, data, { withCredentials: true });
 export const getProject = (id: string) => axios.get(`${domain}/project/${id}`, { withCredentials: true });
+export const createNewTask = (data: InitialNewTask) => axios.post(`${domain}/task`, data,  { withCredentials: true });
