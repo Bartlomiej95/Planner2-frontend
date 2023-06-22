@@ -3,17 +3,15 @@ import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
 import { SubHeading } from '../../components/Heading/Heading';
 import { useContext, useEffect, useState } from 'react';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
-import { TaskSection } from '../TasksSection/TasksSection';
+import { TasksSection } from '../TasksSection/TasksSection';
 import { InnerNavbar } from '../../molecules/InnerNavbar/InnerNavbar';
 import { UserContext } from '../../context/UserContext';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
 import { IUser, Role } from '../../types/Users';
 import { PrimaryBtn } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import { fetchUsersFromCompany } from '../../store/Users/usersSlice';
 import { fetchAllProjects } from '../../store/Projects/projectsSlice';
-import { reduceEachLeadingCommentRange } from 'typescript';
 import { IProject } from '../../types/Projects';
 import { ArchivesCard } from '../../molecules/ArchivesCard/ArchivesCard';
 
@@ -134,8 +132,7 @@ export const MainSection = () => {
             {
                 typeOfMainSection === MainSectionType.Tasks && (
                     <WrapperProjectCard>
-                       <TaskSection />
-                       <h2>Zadania</h2>
+                       <TasksSection />
                     </WrapperProjectCard>
                 )
             }

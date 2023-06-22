@@ -32,6 +32,8 @@ const WrapperSliderTask = styled(Wrapper)<{ readonly active: boolean;}>`
     margin-bottom: 0px;
     justify-content: end;
     padding: 0 3px;
+    cursor: pointer;
+    
     ${({ active }) => active &&
         css`
             background-color: green;
