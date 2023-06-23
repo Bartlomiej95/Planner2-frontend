@@ -4,7 +4,7 @@ import { SubSubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { SliderTask } from '../SliderTheme/SliderTheme';
 import { useAppDispatch } from '../../utils/hooks';
-import { toggleActivateTask } from '../../store/Tasks/tasksSlice';
+import { finishTask, toggleActivateTask } from '../../store/Tasks/tasksSlice';
 import { MessageModal } from '../Modal/MessageModal';
 
 const Wrapper = styled.div<{ readonly isFinish: boolean }>`
@@ -88,6 +88,7 @@ const initialTimeObject = {
 export const TaskCard: React.FC<Props> = ({ id, title, brief, taskTime, currentTime, currentTimeType, isFinish, isActive }) => {
 
     const [ activeTask, setActiveTask] = useState(false);
+    const [ finishStatus, setFinishStatus ] = useState(isFinish);
     const [ currentlyTaskTime, setCurrentlyTaskTime ] = useState(currentTimeType);
     const [ timeForAllTask, setTimeForAllTask ] = useState(initialTimeObject);
     const [ percentCompleteOfTheTask, setPercentCompleteOfTheTask ] = useState(0);
@@ -149,9 +150,19 @@ export const TaskCard: React.FC<Props> = ({ id, title, brief, taskTime, currentT
     };
 
     const handleUpdateTask = (e: React.SyntheticEvent): void => {
-        
-        // dispatch(updateTask(id, isFinish, taskTime));  
-        
+        e.preventDefault();
+        (async () => {
+            const payload = await dispatch(finishTask(id)).then(res => res.payload);
+            if(payload.ok){
+                setPopup("Success");
+                setFinishStatus(true);
+                setErrorTask(payload.message);
+            } else {
+                setPopup("Error");
+                setErrorTask(payload.response.data.message);
+            }       
+            setTimeout(() => setPopup(""), 3000);
+        })(); 
     };
 
     return(
@@ -164,7 +175,7 @@ export const TaskCard: React.FC<Props> = ({ id, title, brief, taskTime, currentT
                 <MiddlePart> 
                     <Paragraph>{brief}</Paragraph>
                     <CloseTaskParagraph onClick={(e: React.SyntheticEvent) => handleUpdateTask(e)}>
-                        { isFinish === true ? 'Przywróć' : 'Zakończ' }
+                        { finishStatus === true ? 'Przywróć' : 'Zakończ' }
                     </CloseTaskParagraph>
                 </MiddlePart>
                 <WrapperLoadingBar>

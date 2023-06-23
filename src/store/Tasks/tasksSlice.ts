@@ -37,7 +37,7 @@ export const toggleActivateTask = createAsyncThunk(
             console.log(error);
         }
     }
-)
+);
 
 export const inactivateTask = createAsyncThunk(
     "tasks/inactivateTask",
@@ -49,7 +49,19 @@ export const inactivateTask = createAsyncThunk(
             console.log(error);
         }
     }
-)
+);
+
+export const finishTask = createAsyncThunk(
+    "tasks/finishTask",
+    async (id: string, { rejectWithValue }) => {
+        try {
+            const { data } = await api.finishTask(id);
+            return data;
+        } catch (error) {
+            return rejectWithValue(error);
+        }
+    }
+);
 
 type initialStateType = {
     tasks: ITask[],
@@ -120,6 +132,16 @@ export const tasksSlice = createSlice({
         builder.addCase(inactivateTask.fulfilled, (state, action) => {
             console.log("Success");
             state.task = action.payload.task;
+        });
+
+        builder.addCase(finishTask.pending, (state, action) => {
+            console.log("Pending");
+        });
+        builder.addCase(finishTask.rejected, (state, action) => {
+            console.log("Rejected");
+        });
+        builder.addCase(finishTask.fulfilled, (state, action) => {
+            console.log("Success");
         });
     }
 });
