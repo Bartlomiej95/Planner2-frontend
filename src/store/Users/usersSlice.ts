@@ -25,7 +25,7 @@ export const activateNewUser = createAsyncThunk(
             console.log(error);
         }
     }
-)
+);
 
 export const loginUser = createAsyncThunk(
     "users/loginUser",
@@ -37,7 +37,7 @@ export const loginUser = createAsyncThunk(
             console.log(error);
         }
     }
-)
+);
 
 export const fetchUsersFromCompany = createAsyncThunk(
     "users/fetchUsersFromCompany",

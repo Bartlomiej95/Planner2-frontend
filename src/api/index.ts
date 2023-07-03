@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { NewCompanyType } from '../types/Companies';
-import { ActivationUser } from '../types/Users';
+import { ActivationUser, ChangePasswordType } from '../types/Users';
 import { NewProject } from '../types/Projects';
 import { InitialNewTask } from '../types/Tasks';
 
@@ -13,6 +13,7 @@ export const activateNewUser = (data: ActivationUser) => axios.post(`${domain}/a
 export const createNewCompany = (data: NewCompanyType) => axios.post(`${domain}/company`, { ...data });
 export const login = (data: {email: string, password: string}) => axios.post(`${domain}/login`, { ...data }, { withCredentials: true});
 export const logout = () => axios.delete(`${domain}/logout`, { withCredentials: true});
+export const changePassword = (data: ChangePasswordType) => axios.patch(`${domain}/user/changepass`, data , { withCredentials: true });
 export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });
 export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
 export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });

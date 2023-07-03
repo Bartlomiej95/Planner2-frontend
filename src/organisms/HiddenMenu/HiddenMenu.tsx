@@ -28,6 +28,7 @@ const LogoDiv = styled.div`
 const MiddleDiv = styled.div`
     height: 70vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
@@ -44,8 +45,9 @@ const ExitSubHeading = styled.div`
     color: #372FFF;
 `;
 
-const LogoutSubHeading = styled(SubHeading)`
+const HiddenMenuSubHeading = styled(SubHeading)`
     cursor: pointer;
+    margin-bottom: 30px;
     :hover{
         color: darkgray;
     }
@@ -79,7 +81,8 @@ export const HiddenMenu = ({ isActive, exitHiddenMenu } :Props) => {
                     <Logo>Planner</Logo>
                 </LogoDiv>
                 <MiddleDiv>
-                    <LogoutSubHeading onClick={ () => handleLogoutClick()} >Wyloguj się</LogoutSubHeading>
+                    <HiddenMenuSubHeading onClick={ () => handleLogoutClick()} >Wyloguj się</HiddenMenuSubHeading>
+                    <HiddenMenuSubHeading onClick={ () => nav('/changepass') }>Zmień hasło</HiddenMenuSubHeading>
                 </MiddleDiv>
                 <ExitDiv onClick={() => exitHiddenMenu()}>
                     <ExitSubHeading>Zamknij</ExitSubHeading>

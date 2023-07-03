@@ -31,6 +31,12 @@ export type ActivationUser = {
     position: Position;
 }
 
+export type ChangePasswordType = {
+    password: string,
+    newPassword: string,
+    replyNewPassword: string,
+}
+
 export interface IUser {
     id: string, 
     firstName: string, 
