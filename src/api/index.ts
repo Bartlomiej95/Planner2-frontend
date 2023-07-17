@@ -14,6 +14,7 @@ export const createNewCompany = (data: NewCompanyType) => axios.post(`${domain}/
 export const login = (data: {email: string, password: string}) => axios.post(`${domain}/login`, { ...data }, { withCredentials: true});
 export const logout = () => axios.delete(`${domain}/logout`, { withCredentials: true});
 export const changePassword = (data: ChangePasswordType) => axios.patch(`${domain}/user/changepass`, data , { withCredentials: true });
+export const sendEmailToReset = (email: string) => axios.put(`${domain}/password`, email);
 export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });
 export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
 export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });

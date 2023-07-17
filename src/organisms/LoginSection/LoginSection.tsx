@@ -29,6 +29,11 @@ const LoginParagraph = styled(Paragraph)`
     text-align: center;
 `;
 
+const RestartSpan = styled.span`
+    color: #0903B0;
+    font-weight: 700;
+    cursor: pointer;
+`;
 
 export const LoginSection = () => {
 
@@ -67,7 +72,7 @@ export const LoginSection = () => {
     return(
         <Wrapper>
              <LoginSectionHeading>Zaloguj się</LoginSectionHeading>
-             <LoginParagraph>Nie pamiętasz hasła? Wygeneruj nowe</LoginParagraph>
+             <LoginParagraph>Nie pamiętasz hasła? <RestartSpan onClick={() => nav('/reset')}>Wygeneruj nowe</RestartSpan></LoginParagraph>
              <form>
                 <Input name="email" type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
                 <Input name="password" type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
