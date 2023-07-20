@@ -37,6 +37,12 @@ export type ChangePasswordType = {
     replyNewPassword: string,
 }
 
+export type RestartPasswordType = {
+    link: string,
+    password: string, 
+    replyPassword: string,
+}
+
 export interface IUser {
     id: string, 
     firstName: string, 

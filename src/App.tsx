@@ -15,6 +15,7 @@ import { DetailsProject } from "./views/DetailsProject";
 import { NewTaskPage } from "./views/NewTaskPage";
 import { ChangePasswordPage } from "./views/ChangePasswordPage";
 import { ResetPasswordPage } from "./views/ResetPasswordPage";
+import { RetrievePassPage } from "./views/RetrievePassPage";
 
 function App() {
 
@@ -38,6 +39,7 @@ function App() {
             <Route path="/dashbord/task/new" element={<NewTaskPage/>} />
             <Route path="/changepass" element={<ChangePasswordPage/>} />
             <Route path="/reset" element={<ResetPasswordPage/>} />
+            <Route path="/restart/:link" element={<RetrievePassPage/>} />
 
           </Routes>
         </Router>
