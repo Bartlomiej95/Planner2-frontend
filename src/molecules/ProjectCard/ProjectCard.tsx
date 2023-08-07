@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import { SubSubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
-import { Label } from '../Label/Label';
+import { PrimaryBtn } from '../../components/Button/Button';
 
 const Wrapper = styled.div`
     position: relative;
     width: 305px;
-    min-height: 200px;
+    min-height: 130px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -21,40 +21,6 @@ const ProjectCardParagraph = styled(Paragraph)`
     margin: 15px 0;
 `;
 
-const WrapperProjectCompletePercent = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    align-items: center;
-    width: 70%;
-`;
-
-const Diagram = styled.div`
-    position: relative;
-    width: 47px;
-    height: 47px;
-    border-radius: 50%;
-    border: 2px solid #0903B0;
-    margin-right: 15px;
-`;
-
-const DiagramPercent= styled(Paragraph)`
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #0903B0;
-    font-weight: 700;
-`;
-
-const WrapperLabels = styled.div`
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-top: 20px;
-`;
-
 const LabelCard = styled.p`
     position: absolute;
     top: 8%;
@@ -64,25 +30,26 @@ const LabelCard = styled.p`
     font-weight: 700;
 `;
 
+const ProjectCardBtn = styled(PrimaryBtn)`
+    width: 100px;
+    height: 32px;  
+`;
+
+interface IProps {
+    id: string,
+    title: string,
+    customer: string,
+    deadline: string,
+}
 
 
-export const ProjectCard = () => {
+export const ProjectCard = ({ id, title, customer, deadline} : IProps) => {
     return(
         <Wrapper>
-            <SubSubHeading>Nazwa projektu</SubSubHeading>
-            <ProjectCardParagraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vulputate est eget eros dignissim egestas. Nam sed sapien sapien.</ProjectCardParagraph>
-            <WrapperProjectCompletePercent>
-                <Diagram>
-                    <DiagramPercent>27%</DiagramPercent>
-                </Diagram>
-                <Paragraph>Stopień ukończenia projektu</Paragraph>
-            </WrapperProjectCompletePercent>
-            <WrapperLabels>
-                <Label division="Marketing" getStatus={ () => console.log('')}/>
-                <Label division="Konsultacja" getStatus={ () => console.log('')} />
-                <Label division="UX/UI" getStatus={ () => console.log('')}/>
-            </WrapperLabels>
-            <LabelCard>Zespół</LabelCard>
+            <SubSubHeading>{ customer }</SubSubHeading>
+            <ProjectCardParagraph>{ title }</ProjectCardParagraph>
+            <ProjectCardBtn>Projekt</ProjectCardBtn>
+            <LabelCard>{deadline}</LabelCard>
         </Wrapper>
     )
 }

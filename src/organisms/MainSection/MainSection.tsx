@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import * as api from '../../api/index';
 import { ProjectCard } from '../../molecules/ProjectCard/ProjectCard';
 import { SubHeading } from '../../components/Heading/Heading';
 import { useContext, useEffect, useState } from 'react';
@@ -11,7 +12,7 @@ import { IUser, Role } from '../../types/Users';
 import { PrimaryBtn } from '../../components/Button/Button';
 import { useNavigate } from 'react-router-dom';
 import { fetchUsersFromCompany } from '../../store/Users/usersSlice';
-import { fetchAllProjects } from '../../store/Projects/projectsSlice';
+import { fetchAllProjects, fetchProjectsForUser } from '../../store/Projects/projectsSlice';
 import { IProject } from '../../types/Projects';
 import { ArchivesCard } from '../../molecules/ArchivesCard/ArchivesCard';
 
@@ -92,8 +93,8 @@ export const MainSection = () => {
     }, [user, loggedInUser]);
 
     useEffect(() => {
-        dispatch(fetchUsersFromCompany());
-        dispatch(fetchAllProjects());
+        dispatch(fetchUsersFromCompany());        
+        dispatch(fetchProjectsForUser());
     }, 
     [])
 
@@ -113,9 +114,17 @@ export const MainSection = () => {
             {
                 typeOfMainSection === MainSectionType.Project && ( 
                     <WrapperProjectCard>
-                        <ProjectCard />
-                        <ProjectCard />
-                        <ProjectCard />
+                        {
+                            projects.map(project => (
+                                <ProjectCard
+                                    key={project.id}
+                                    id={project.id}
+                                    title={project.title}
+                                    customer={project.customer}
+                                    deadline={project.deadline}                                
+                                />
+                            ))
+                        }
                     </WrapperProjectCard>
                 ) 
             }

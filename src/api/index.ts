@@ -19,6 +19,7 @@ export const restartPassword = (data: RestartPasswordType) => axios.put(`${domai
 export const fetchUsersFromCompany = () => axios.get(`${domain}/company/users`, { withCredentials: true });
 export const createNewProject = (data: NewProject) => axios.post(`${domain}/project`,  data , { withCredentials: true });
 export const fetchAllProjects = () => axios.get(`${domain}/project/all`, { withCredentials: true });
+export const fetchProjectsForUser = () => axios.get(`${domain}/project/user`, { withCredentials: true });
 export const updateProject = (data: NewProject) => axios.patch(`${domain}/project`, data, { withCredentials: true });
 export const getProject = (id: string) => axios.get(`${domain}/project/${id}`, { withCredentials: true });
 export const createNewTask = (data: InitialNewTask) => axios.post(`${domain}/task`, data,  { withCredentials: true });

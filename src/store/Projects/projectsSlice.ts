@@ -51,6 +51,18 @@ export const getProject = createAsyncThunk(
     }
 );
 
+export const fetchProjectsForUser = createAsyncThunk(
+    "projects/fetchProjectsForUser",
+    async () => {
+        try {
+            const { data } = await api.fetchProjectsForUser();
+            return data.projects;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
 const initialState = {
     project: {},
     projects: [],
@@ -107,6 +119,17 @@ export const projectsSlice = createSlice({
     builder.addCase(getProject.fulfilled, (state, action) => {
         console.log("Success");
         state.project = action.payload;
+    });
+
+    builder.addCase(fetchProjectsForUser.pending, (state, action) => {
+        console.log("Pending");
+    });
+    builder.addCase(fetchProjectsForUser.rejected, (state, action) => {
+        console.log("Rejected");
+    });
+    builder.addCase(fetchProjectsForUser.fulfilled, (state, action) => {
+        console.log("Success");
+        state.projects = action.payload;
     });
    }
 });
