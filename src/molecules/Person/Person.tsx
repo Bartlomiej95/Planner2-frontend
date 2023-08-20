@@ -1,18 +1,16 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import userIcon from '../../assets/user.svg';
-import acceptingIcon from '../../assets/accept.svg';
 import { SubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
-import { useEffect, useState } from 'react';
-
 
 const Wrapper = styled.div`
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    justify-content: space-between;
+    justify-content: start;
     align-items: center;
-    margin: 15px 0px;
+    margin: 15px auto;
+    width: 90%;
 
     :first-of-type{
         margin-top: 50px;
@@ -41,27 +39,10 @@ const Img = styled.div<{ readonly icon: string}>`
 `;
 
 const MiddleDiv = styled.div`
+    margin-left: 50px;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
-    justify-content: space-evenly;
-`;
-
-const RightDiv = styled.div<{ readonly icon: string, readonly userSelect: boolean}>`
-    border: 1px solid #D1D1D1;
-    width: 41px;
-    height: 41px;
-    background-color: #D1D1D1;
-    border-radius: 50%;
-    cursor: pointer;
-    background-image: none;
-
-    ${({ userSelect }) => userSelect && css<{readonly icon: string}>`
-        background-image: url(${({ icon }) => icon });
-        background-position: center;
-        background-repeat: no-repeat;
-        background-color: #00BD51;
-    `}
 `;
 
 interface IProps {
@@ -69,24 +50,10 @@ interface IProps {
     firstName: string, 
     lastName: string,
     position: string,
-    assignUserToProject: (id: string) => void,
-    isEdited: boolean,
 }
 
 
-export const PersonToProject = ({ id, firstName, lastName, position, assignUserToProject, isEdited }: IProps) => {
-
-    const [ isAccept, setIsAccept ] = useState(false);
-
-    useEffect(() => {
-        console.log('isEdited in Person', isEdited)
-        setIsAccept(isEdited)
-    },[])
-
-    const handleClick = () => {
-        setIsAccept(prev => !prev);
-        assignUserToProject(id);
-    }
+export const Person = ({ id, firstName, lastName, position }: IProps) => {
 
     return(
         <Wrapper>
@@ -97,7 +64,6 @@ export const PersonToProject = ({ id, firstName, lastName, position, assignUserT
                 <SubHeading>{firstName} {lastName}</SubHeading>
                 <Paragraph>{position}</Paragraph>
              </MiddleDiv>
-            <RightDiv icon={acceptingIcon} onClick={() => handleClick()} userSelect={isAccept} />
         </Wrapper>
     )
 }

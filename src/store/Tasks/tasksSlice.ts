@@ -27,6 +27,18 @@ export const fetchAllTasks = createAsyncThunk(
     }
 );
 
+export const fetchAllTasksInProject = createAsyncThunk(
+    "tasks/fetchAllTasksInProject",
+    async (id: string) => {
+        try {
+            const { data } = await api.fetchAllTasksInProject(id);
+            return data.tasks;
+        } catch (error) {
+            console.log(error);
+        }
+    }
+);
+
 export const toggleActivateTask = createAsyncThunk(
     "tasks/activateTask",
     async (id: string) => {
@@ -142,6 +154,16 @@ export const tasksSlice = createSlice({
         });
         builder.addCase(finishTask.fulfilled, (state, action) => {
             console.log("Success");
+        });
+
+        builder.addCase(fetchAllTasksInProject.pending, (state, action) => {
+            console.log("Pending");
+        });
+        builder.addCase(fetchAllTasksInProject.rejected, (state, action) => {
+            console.log("Rejected");
+        });
+        builder.addCase(fetchAllTasksInProject.fulfilled, (state, action) => {
+            state.tasks = action.payload;
         });
     }
 });

@@ -26,4 +26,6 @@ export const createNewTask = (data: InitialNewTask) => axios.post(`${domain}/tas
 export const fetchAllTasks = () => axios.get(`${domain}/task/all`, { withCredentials: true});
 export const toggleActivateTask = (id: string) => axios.patch(`${domain}/task/active/${id}`, id, { withCredentials: true });
 export const finishTask = (id: string) => axios.patch(`${domain}/task/finish/${id}`, id, { withCredentials: true });
+export const fetchUsersInProject = (projectId: string) => axios.get(`${domain}/${projectId}/users`, { withCredentials: true });
+export const fetchAllTasksInProject = (projectId: string) => axios.get(`${domain}/task/project/${projectId}`, { withCredentials: true});
 

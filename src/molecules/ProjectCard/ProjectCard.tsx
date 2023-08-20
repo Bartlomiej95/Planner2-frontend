@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { SubSubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 import { PrimaryBtn } from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     position: relative;
@@ -44,11 +45,13 @@ interface IProps {
 
 
 export const ProjectCard = ({ id, title, customer, deadline} : IProps) => {
+
+    const nav = useNavigate();
     return(
         <Wrapper>
             <SubSubHeading>{ customer }</SubSubHeading>
             <ProjectCardParagraph>{ title }</ProjectCardParagraph>
-            <ProjectCardBtn>Projekt</ProjectCardBtn>
+            <ProjectCardBtn onClick={() => nav(`/dashbord/project/${title}`, { state: { id }})}>Projekt</ProjectCardBtn>
             <LabelCard>{deadline}</LabelCard>
         </Wrapper>
     )

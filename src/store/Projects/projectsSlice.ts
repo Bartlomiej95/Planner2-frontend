@@ -118,7 +118,7 @@ export const projectsSlice = createSlice({
     });
     builder.addCase(getProject.fulfilled, (state, action) => {
         console.log("Success");
-        state.project = action.payload;
+        state.project = action.payload.project;
     });
 
     builder.addCase(fetchProjectsForUser.pending, (state, action) => {

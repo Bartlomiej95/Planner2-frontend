@@ -96,7 +96,13 @@ export const MainSection = () => {
         dispatch(fetchUsersFromCompany());        
         dispatch(fetchProjectsForUser());
     }, 
-    [])
+    []);
+
+    useEffect(() => {
+        if(typeOfMainSection === MainSectionType.ProjectManager){
+            dispatch(fetchAllProjects());
+        }
+    },[typeOfMainSection])
 
     if(!userData || Object.keys(userData).length === 0){
         return(
