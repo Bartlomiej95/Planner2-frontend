@@ -1,5 +1,6 @@
 import styled from 'styled-components';
-import { LPParagraph, Paragraph } from '../../components/Paragraph/Paragraph';
+import { LPParagraph } from '../../components/Paragraph/Paragraph';
+import { SubHeading } from '../../components/Heading/Heading';
 
 
 const Wrapper = styled.div`
@@ -8,20 +9,32 @@ const Wrapper = styled.div`
     flex-wrap: nowrap;
     align-items: center;
     padding: 0 37px;
-    margin: 0 auto;
+    margin: 10px auto;
+
+    @media(min-width: 1360px){
+        width: 400px;
+    }
 `;
 
 const NumberParagraph = styled(LPParagraph)`
     margin-right: 26px;
+    font-weight: 700;
 `;
 
+const SubHeadingFuncPlannerCard = styled(SubHeading)`
+    text-align: left;
+`;
 
+interface Props {
+    content: string,
+    id: number,
+}
 
-const FuncPlannerCard = () => {
+const FuncPlannerCard = ({ content, id }: Props) => {
     return(
         <Wrapper>
-            <NumberParagraph>1</NumberParagraph>
-            <Paragraph>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer vulputate est eget eros dignissim egestas.</Paragraph>        
+            <NumberParagraph>{id}</NumberParagraph>
+            <SubHeadingFuncPlannerCard>{content}</SubHeadingFuncPlannerCard>        
         </Wrapper>
     )
 }

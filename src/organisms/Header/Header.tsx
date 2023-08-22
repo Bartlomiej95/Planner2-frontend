@@ -14,6 +14,10 @@ const Wrapper = styled.div`
     justify-content: space-between;
     align-items: center;
     padding: 0 33px;
+
+    @media(min-width: 1360px){
+        justify-content: space-around;
+    }
 `;
 
 const Header = () => {

@@ -1,11 +1,11 @@
+import styled from "styled-components";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { AppDispatch } from "..";
+import Header from "../organisms/Header/Header";
 import { PrimaryBtn } from "../components/Button/Button";
 import { Heading } from "../components/Heading/Heading";
 import { Input } from "../components/Input/Input";
-import Header from "../organisms/Header/Header";
 import { createNewUser } from "../store/Users/usersSlice";
 import { emailValidation } from "../utils/emailValidation";
 
@@ -58,7 +58,7 @@ export const RegisterPage = () => {
             <Header />
             <RegisterHeading>Formularz rejestracyjny</RegisterHeading>
             <form>
-                <Input type="email" value={newUserEmail} onChange={(e) => handleChange(e)} />
+                <Input type="email" value={newUserEmail} placeholder="Adres email" onChange={(e) => handleChange(e)} />
                 { !validationData.ok && <ErrorMsg>{validationData.message}</ErrorMsg> }
                 <RegisterBtn onClick={(e) => handleClick(e)}>Zarejestruj się</RegisterBtn>
             </form>

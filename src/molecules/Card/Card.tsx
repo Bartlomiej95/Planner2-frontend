@@ -2,8 +2,8 @@ import styled from 'styled-components';
 import { SubSubHeading } from '../../components/Heading/Heading';
 import { Paragraph } from '../../components/Paragraph/Paragraph';
 
-const WrapperBannerCard = styled.div`
-    width: 325px;
+const WrapperBannerCard = styled.div<{ readonly activeId: number}>`
+    min-width: 325px;
     height: 150px;
     background-color: #FEDD2C;
     border-top-left-radius: 0;
@@ -11,7 +11,15 @@ const WrapperBannerCard = styled.div`
     border-bottom-right-radius: 30px;
     border-top-right-radius: 30px;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.16);
-    margin: 50px auto;
+    margin: 50px 10px;
+    flex-basis: 1;
+    transform: translateX(calc( -345px * ${props => (props.activeId - 1)} ));
+
+    @media(min-width: 600px) {
+        width: 350px;
+        min-width: 350px;
+        transform: translateX(calc( -370px * ${props => (props.activeId - 1)}));
+    }
 `;
 
 const SubSubHeadingBannerCard = styled(SubSubHeading)`
@@ -22,13 +30,17 @@ const ParagraphBannerCard = styled(Paragraph)`
     padding: 0 50px 25px 25px;
 `;
 
+interface Props {
+    id: number,
+    content: string,
+    activeId: number,
+}
 
-
-export const BannerCardAboutPlanner = () => {
+export const BannerCardAboutPlanner = ({id, content, activeId}: Props) => {
     return(
-        <WrapperBannerCard>
-            <SubSubHeadingBannerCard>Rozwiązanie N</SubSubHeadingBannerCard>
-            <ParagraphBannerCard>Lorem ipsum dolor sit amet, consector adpiscing elit. Intege valupate est eget eros dignissim egestas. Nam sed sapien sapien</ParagraphBannerCard>
+        <WrapperBannerCard activeId={activeId}>
+            <SubSubHeadingBannerCard>Rozwiązanie {id}</SubSubHeadingBannerCard>
+            <ParagraphBannerCard>{content}</ParagraphBannerCard>
         </WrapperBannerCard>
     )
 }

@@ -10,6 +10,10 @@ const Wrapper = styled.footer`
 const FooterLogo = styled(Logo)`
     margin-left: 34px;
     padding: 20px 0;
+    
+    @media(min-width: 1360px){
+        margin-left: 22.5vw;
+    }
 `;
 
 const Footer = () => {

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Heading } from '../../components/Heading/Heading';
 import { PrimaryBtn } from '../../components/Button/Button';
+import { useNavigate } from 'react-router-dom';
 
 
 const Wrapper = styled.section`
@@ -15,10 +16,13 @@ const JoinUsButton = styled(PrimaryBtn)`
 `;
 
 const JoinUsSection = () => {
+
+    const nav = useNavigate();
+
     return(
         <Wrapper>
             <Heading>Chcesz skorzystać z aplikacji? </Heading>
-            <JoinUsButton>Dołącz</JoinUsButton>
+            <JoinUsButton onClick={() => nav('/register')}>Dołącz</JoinUsButton>
         </Wrapper>
     )
 }

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Heading } from '../../components/Heading/Heading';
 import FuncPlannerCard from '../../molecules/FuncPlannerCard/FuncPlannerCard';
+import { data } from '../../data';
 
 const Wrapper = styled.section`
     width: 100vw;
@@ -12,14 +13,40 @@ const PlannerFnHeading = styled(Heading)`
     margin-bottom: 50px;
 `;
 
+const WrapperFuncCard = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 340px;
+    margin: 0 auto;
+
+    @media(min-width: 1360px){
+        width: 800px;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 0 auto;
+    }
+`;
+
 const PlannerFunc = () => {
     return(
         <Wrapper>
             <PlannerFnHeading>Funkcje naszego planera</PlannerFnHeading>
-            <FuncPlannerCard />
-            <FuncPlannerCard />
-            <FuncPlannerCard />
-            <FuncPlannerCard />
+            <WrapperFuncCard>
+            {
+                data.functions.map(item =>(
+                        <FuncPlannerCard 
+                            key={item.id}
+                            id={item.id}
+                            content={item.content}
+                        />
+                    ))
+            }
+            </WrapperFuncCard>
         </Wrapper>
     )
 }
