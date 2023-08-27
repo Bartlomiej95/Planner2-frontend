@@ -14,9 +14,13 @@ const Wrapper = styled.section`
 `;
 
 const BannerLoginButton = styled(PrimaryBtn)`
-    margin: 50px auto 110px auto;
+    margin: 50px auto 20px auto;
     box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.16);
     border: 0px;
+
+    :last-of-type{
+        margin: 30px auto 110px auto;
+    }
 `;
 
 const CardNavigation = styled.div`
@@ -76,6 +80,7 @@ const Banner = () => {
         <Wrapper>
             <Heading> Zaloguj się lub utwórz konto </Heading>
             <BannerLoginButton onClick={() => nav('/login')}>Zaloguj się </BannerLoginButton>
+            <BannerLoginButton onClick={() => nav('/sample-login')}>Konto testowe </BannerLoginButton>
             <SubHeading>Poznaj nasze rozwiązanie</SubHeading>
             <CardWrapper activeId={idActiveNav}>
                 {

@@ -69,6 +69,7 @@ export const ProfileSection = () => {
         user ? setUserData(user) : setUserData(loggedInUser as IUser);       
     }, [user, loggedInUser]);
 
+
     if(!userData || Object.keys(userData).length === 0){
         return(
             <h2>Wczytywanie danych...</h2>

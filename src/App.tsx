@@ -16,6 +16,7 @@ import { NewTaskPage } from "./views/NewTaskPage";
 import { ChangePasswordPage } from "./views/ChangePasswordPage";
 import { ResetPasswordPage } from "./views/ResetPasswordPage";
 import { RetrievePassPage } from "./views/RetrievePassPage";
+import { SampleLoginPage } from "./views/SampleLoginPage";
 
 function App() {
 
@@ -40,6 +41,7 @@ function App() {
             <Route path="/changepass" element={<ChangePasswordPage/>} />
             <Route path="/reset" element={<ResetPasswordPage/>} />
             <Route path="/restart/:link" element={<RetrievePassPage/>} />
+            <Route path="/sample-login" element={<SampleLoginPage/>} />
 
           </Routes>
         </Router>

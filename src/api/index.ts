@@ -29,3 +29,5 @@ export const finishTask = (id: string) => axios.patch(`${domain}/task/finish/${i
 export const fetchUsersInProject = (projectId: string) => axios.get(`${domain}/${projectId}/users`, { withCredentials: true });
 export const fetchAllTasksInProject = (projectId: string) => axios.get(`${domain}/task/project/${projectId}`, { withCredentials: true});
 
+export const employeeLogin = () => axios.post(`${domain}/login`, { email: "k.wlodarczyk@company.com", password:"testowehaslo"}, { withCredentials: true});
+export const pmLogin = () => axios.post(`${domain}/login`, { email: "z.wojcik@company.com", password:"testowehaslo1"}, { withCredentials: true});
