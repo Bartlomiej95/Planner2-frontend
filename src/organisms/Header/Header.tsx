@@ -62,6 +62,9 @@ const Header = () => {
     const location = useLocation();
 
     const searchedLoc = location.pathname === "/" || location.pathname === "/dashbord/user" || location.pathname === "/logout";
+    const menuLoc = location.pathname === "/" || location.pathname === "/login" || location.pathname === "/logout" || location.pathname === "/sample-login"
+        || location.pathname === "/register";
+
 
     return(
         <> 
@@ -71,7 +74,7 @@ const Header = () => {
                     <Logo>Planner</Logo>
                     <IconsDiv>
                         { !searchedLoc && ( <BackButton onClick={() => nav(-1)}>Wróć</BackButton> ) }
-                        <Icon bcgIcon={menuIcon} onClick={() => setShowHiddenMenu(prev => !prev)}/>
+                        { !menuLoc && ( <Icon bcgIcon={menuIcon} onClick={() => setShowHiddenMenu(prev => !prev)}/> ) }
                     </IconsDiv>
                 </Wrapper>
             )
