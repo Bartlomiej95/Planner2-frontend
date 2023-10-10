@@ -140,7 +140,7 @@ export const MainSection = () => {
                         {/* <ArchivesCard />
                         <ArchivesCard />
                         <ArchivesCard /> */}
-                        <h2>Archiwum</h2>
+                        <SubHeading>Archiwum</SubHeading>
                     </WrapperProjectCard>
                 )
             }
@@ -152,7 +152,7 @@ export const MainSection = () => {
                 )
             }
             {
-                (userData.role === Role.manager || userData.role === Role.owner ) && typeOfMainSection === MainSectionType.ProjectManager && (
+                (userData.role === Role.manager || userData.role === Role.owner ) && (typeOfMainSection === MainSectionType.ProjectManager) && (
                     <WrapperProjectCard>
                        <BtnCreateProject onClick={() => nav('/dashbord/project/new')} > Dodaj nowy projekt </BtnCreateProject>
                        <PMSubHeading>Aktualne projekty</PMSubHeading>
