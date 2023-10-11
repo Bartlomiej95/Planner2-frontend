@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { Input } from '../../components/Input/Input';
 import { TaskCard } from '../../molecules/TaskCard/TaskCard';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { fetchAllTasks } from '../../store/Tasks/tasksSlice';
 
 const TaskInput = styled(Input)`
@@ -20,6 +20,21 @@ export const TasksSection :React.FC = () => {
 
     const tasks = useAppSelector(reducer => reducer.tasksReducer.tasks);
     const dispatch = useAppDispatch();    
+    const [ searchTask, setSearchTask ] = useState('');
+    let searchedTasks = [...tasks]; // robimy kopię tablicy żeby ją potem sortować,a oryginału nie ruszać
+
+    const handleChange = (e :React.SyntheticEvent) => {
+        e.preventDefault();
+        const target = e.target as HTMLTextAreaElement;
+        setSearchTask(target.value);
+    }
+
+    if(searchTask !== ""){
+        const inputedValue = searchTask.toString().toLowerCase();
+        searchedTasks = tasks.filter (task => 
+            task.title.toLowerCase().includes(inputedValue) || task.brief.toLowerCase().includes(inputedValue)
+        )
+    }
 
     const setTaskTime = (time : any) => {
         const hours = Math.floor(time / 60);
@@ -43,10 +58,10 @@ export const TasksSection :React.FC = () => {
 
     return(
         <>
-            <TaskInput />
+            <TaskInput placeholder="Wpisz nazwę zadania" value={searchTask} onChange={(e) => handleChange(e) } />
             <TaskWrapper>
                 {
-                    tasks.map(task => (
+                    searchedTasks.map(task => (
                         <TaskCard 
                             key={task.id}
                             id={task.id}
