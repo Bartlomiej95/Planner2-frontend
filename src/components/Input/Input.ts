@@ -8,6 +8,7 @@ export const Input = styled.input`
     border-radius: ${({ theme }) => theme.Input.borderRadius};
     padding: ${({ theme }) => theme.Input.mobilePadding};
     margin: 10px auto;
+    padding-left: 10px;
 
     ::placeholder{
         padding-left: 25px;

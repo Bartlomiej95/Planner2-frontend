@@ -1,7 +1,7 @@
 import { useState } from "react";
 import * as api from '../api/index';
 import { PrimaryBtn } from "../components/Button/Button";
-import { Heading } from "../components/Heading/Heading";
+import { Heading, SubHeading, SubSubHeading } from "../components/Heading/Heading";
 import { Input } from "../components/Input/Input";
 import Header from "../organisms/Header/Header";
 import styled from "styled-components";
@@ -11,12 +11,20 @@ import { MessageModal } from "../molecules/Modal/MessageModal";
 const WrapperForm = styled.form`
     display: flex;
     flex-direction: column;
-    width: 75%;
+    width: 90%;
     margin: 30px auto 0 auto;
+
+    @media(min-width: 700px){
+        align-items: center;
+    }
 `;
 
 const ChangePassBtn = styled(PrimaryBtn)`
     margin-top: 25px;
+`;
+
+const InputChangePass = styled(Input)`
+    margin: 10px 0 20px 0;
 `;
 
 const initialData = {
@@ -48,6 +56,7 @@ export const ChangePasswordPage = () => {
             (async () => {
                 const payload = await api.changePassword(data).then(res => res.data)
                 .catch(err => err);
+                console.log(payload);
                 
                 if(payload.ok){
                     setPopup("Success");
@@ -57,7 +66,13 @@ export const ChangePasswordPage = () => {
                     setError(payload.message);
                 } else {
                     setPopup("Error");
-                    const msg = payload.messages ?? payload.response.data.message;
+                    let msg;
+                    if(payload.messages){
+                        msg = payload.messages ?? payload.response.data.message;
+                    }
+                    if(payload.message){
+                        msg = payload.message;
+                    }
                     setError(msg);
                 }
                 setTimeout(() => setPopup(""), 3000); 
@@ -72,12 +87,12 @@ export const ChangePasswordPage = () => {
             <Header/>
             <Heading>Zmiana hasła</Heading>
             <WrapperForm>
-                <label>Stare hasło</label>
-                <Input name="password" type="password" onChange={(e) => handleChange(e)} value={data.password}/>
-                <label>Nowe hasło</label>
-                <Input name="newPassword" type="password" onChange={(e) => handleChange(e)} value={data.newPassword}/>
-                <label>Powtórz nowe hasło</label>
-                <Input name="replyNewPassword" type="password" onChange={(e) => handleChange(e)} value={data.replyNewPassword}/>
+                <SubSubHeading>Stare hasło</SubSubHeading>
+                <InputChangePass name="password" type="password" onChange={(e) => handleChange(e)} value={data.password}/>
+                <SubSubHeading>Nowe hasło</SubSubHeading>
+                <InputChangePass name="newPassword" type="password" onChange={(e) => handleChange(e)} value={data.newPassword}/>
+                <SubSubHeading>Powtórz nowe hasło</SubSubHeading>
+                <InputChangePass name="replyNewPassword" type="password" onChange={(e) => handleChange(e)} value={data.replyNewPassword}/>
                 <ChangePassBtn onClick={(e) => handleClick(e)}>Zmień hasło</ChangePassBtn>
             </WrapperForm>
             { popup === "Error" && <MessageModal type="Error" content={error} /> }  
