@@ -3,6 +3,7 @@ import styled, { css } from 'styled-components';
 import leftArrow from '../../assets/leftArrayNavbar.svg';
 import rightArrow from '../../assets/rightArrayNavbar.svg';
 import { SubHeading } from '../../components/Heading/Heading';
+import { Role } from '../../types/Users';
 
 const Wrapper = styled.div`
     display: flex;
@@ -74,11 +75,12 @@ enum MainSectionType {
 interface Props {
     valueOfType: MainSectionType,
     typeFn: Function,
+    userRole: string,
 }
 
 
 
-export const InnerNavbar = ({ typeFn, valueOfType }: Props) => {
+export const InnerNavbar = ({ typeFn, valueOfType, userRole }: Props) => {
 
     // ustawienia dla arrows 0 - widzimy pierwszy kafelek - blokujemy możliwość dalszego przesuwania w prawo  [1][2][3]>
     // ustawienia dla arrows 1 - <[2][3][4]
@@ -97,9 +99,11 @@ export const InnerNavbar = ({ typeFn, valueOfType }: Props) => {
                 <DivElemNavbar active={ valueOfType === MainSectionType.Tasks } onClick={() => typeFn(MainSectionType.Tasks)} shift={arrowOptions}>
                     <NavSubHeading active={ valueOfType === MainSectionType.Tasks } >Lista zadań</NavSubHeading>
                 </DivElemNavbar>
-                <DivElemNavbar active={ valueOfType === MainSectionType.ProjectManager } onClick={() => typeFn(MainSectionType.ProjectManager)} shift={arrowOptions}>
-                    <NavSubHeading active={ valueOfType === MainSectionType.ProjectManager } >Zarządzaj Projektami</NavSubHeading>
-                </DivElemNavbar>
+                { 
+                    (userRole === Role.manager || userRole === Role.owner ) && (<DivElemNavbar active={ valueOfType === MainSectionType.ProjectManager } onClick={() => typeFn(MainSectionType.ProjectManager)} shift={arrowOptions}>
+                        <NavSubHeading active={ valueOfType === MainSectionType.ProjectManager } >Zarządzaj Projektami</NavSubHeading>
+                    </DivElemNavbar>)
+                }
             </WrapperNavbar>
             { arrowOptions < 1 && <ArrowRight src={rightArrow} onClick={() => setArrowOptions(prev => prev = prev + 1)} /> }
         </Wrapper>

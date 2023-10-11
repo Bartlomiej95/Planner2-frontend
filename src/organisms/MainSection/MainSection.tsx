@@ -115,6 +115,7 @@ export const MainSection = () => {
                 <InnerNavbar 
                     typeFn={ (typeOfMainSection: React.SetStateAction<MainSectionType>) => setTypeOfMainSection(typeOfMainSection)}
                     valueOfType={typeOfMainSection} 
+                    userRole={userData.role}
                 />
             </WrapperNavbar>
             {
