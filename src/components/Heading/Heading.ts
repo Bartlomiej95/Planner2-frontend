@@ -19,4 +19,7 @@ export const Logo = styled.h2`
     font-size: ${({ theme }) => theme.SubSubHeading.mobileFontSize};
     font-weight: bold;
     display: block;
+    :hover{
+        cursor: pointer;
+    }
 `;
