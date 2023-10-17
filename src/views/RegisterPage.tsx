@@ -52,6 +52,7 @@ export const RegisterPage = () => {
                     const payload = await dispatch(createNewUser(newUserEmail)).then(res => res.payload);
                     if(payload.ok){
                         setPopup("Success");
+                        setNewUserEmail("");
                     } else {
                         setPopup("Error");
                     }

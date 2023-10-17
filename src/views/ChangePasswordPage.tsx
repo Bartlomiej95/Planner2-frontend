@@ -56,13 +56,12 @@ export const ChangePasswordPage = () => {
             (async () => {
                 const payload = await api.changePassword(data).then(res => res.data)
                 .catch(err => err);
-                console.log(payload);
                 
                 if(payload.ok){
                     setPopup("Success");
                     setTimeout(() => {
                         nav('/dashbord/user');
-                    },1);
+                    },1000);
                     setError(payload.message);
                 } else {
                     setPopup("Error");

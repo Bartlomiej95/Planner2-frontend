@@ -71,7 +71,7 @@ const Header = () => {
         {
             !showHiddenMenu && (
                 <Wrapper>
-                    <Logo>Planner</Logo>
+                    <Logo onClick={() => nav('/')}>Planner</Logo>
                     <IconsDiv>
                         { !searchedLoc && ( <BackButton onClick={() => nav(-1)}>Wróć</BackButton> ) }
                         { !menuLoc && ( <Icon bcgIcon={menuIcon} onClick={() => setShowHiddenMenu(prev => !prev)}/> ) }
